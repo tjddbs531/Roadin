@@ -1,0 +1,88 @@
+/* 로그인 페이지 전체 컨테이너 */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+/* 로그인 컨테이너 박스 */
+.login-box {
+  width: 400px;
+  height:400px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top:70px;
+}
+
+/* 로고 스타일 */
+.login-logo {
+  height: 60px; /* 로고 크기 조정 */
+  width: auto;
+  margin-bottom: 20px;
+}
+
+/* 로그인 제목 */
+.login-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* 입력 필드 */
+.login-input {
+  width: 93%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top:25px;
+}
+
+/* 메인 로그인 버튼 (네이버 스타일) */
+.login-main-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #f27f4e; /* 네이버 초록색 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
+.login-main-button:hover {
+  background-color: #e48238;
+}
+
+.login-button:hover {
+  background-color: #e9ecef;
+}
+
+/* 아이디 찾기, 비밀번호 찾기, 회원가입 */
+.login-links {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-links a {
+  color: #0077b6;
+  text-decoration: none;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* 이용 약관 */
+.login-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: gray;
+}
