@@ -16,3 +16,18 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+/* Pretendard Regular 폰트 정의 */
+@font-face {
+  font-family: 'PretendardRegular';
+  src: url('./assets/fonts/Pretendard-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Pretendard Bold 폰트 정의 */
+@font-face {
+  font-family: 'PretendardBold';
+  src: url('./assets/fonts/Pretendard-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
