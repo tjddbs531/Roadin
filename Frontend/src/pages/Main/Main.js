@@ -3,9 +3,10 @@ import './Main.css';
 import toggle_abroad from '../../assets/img/toggle_abroad.svg';
 import toggle_domestic from '../../assets/img/toggle_domestic.svg';
 import ImgSlide from '../../components/ImgSlide/ImgSlide';
+import like_active from '../../assets/img/ic_like_active.svg';
+import like_unactive from '../../assets/img/ic_like_unactive.svg';
 
 function Main() {
-  // 국내 해외 구분
   const [isDomestic, setIsDomestic] = useState(true);
 
   const toggleLocation = () => {
@@ -24,9 +25,25 @@ function Main() {
         <section className='areas'>
           <h3>{isDomestic ? '국내 여행지' : '해외 여행지'}</h3>
           <p>어디로 가시나요?</p>
-          <ImgSlide boxWidth={268} boxHeight={240} gap={20}/>
+          <ImgSlide boxWidth={268} boxHeight={240} gap={20} totalBoxes={7}/>
         </section>
 
+        <section className='popular_area'>
+          <div className='popular_container'>
+            <h3>인기 장소 Top 3</h3>
+            <div className='img_container'>
+              <div className="popular_box">
+                <img src={like_active}/>
+              </div>
+              <div className="popular_box">
+                <img src={like_unactive}/>
+              </div>
+              <div className="popular_box">
+                <img src={like_unactive}/>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
   );
 }

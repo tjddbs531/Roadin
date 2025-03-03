@@ -3,20 +3,13 @@ import "./ImgSlide.css";
 import nextRight from '../../assets/img/ic_next_right.svg';
 import nextLeft from '../../assets/img/ic_next_left.svg';
 
-const ImgSlide = ({boxWidth, boxHeight, gap}) => {
+const ImgSlide = ({boxWidth, boxHeight, gap, totalBoxes}) => {
   // 슬라이드 상태 관리
   const [position, setPosition] = useState(0);
   const [isFirst, setIsFirst] = useState(true);
   const [isLast, setIsLast] = useState(false);
 
-  // 네모 상자 크기와 간격 설정
-  // const boxWidth = 268;
-  // const boxHeight = 240;
-  // const gap = 20;
   const totalWidth = boxWidth + gap;
-
-  // 상자 개수 설정
-  const totalBoxes = 7;
 
   // 오른쪽 버튼 클릭 시
   const slideRight = () => {
