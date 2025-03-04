@@ -22,10 +22,8 @@ function Header() {
         {/*네비게이션 메뉴*/}
         <nav className="nav-menu">
           <a href="#">살펴보기</a>
-          <a href="#">여행</a>
-          <a href="#">리뷰</a>
-          <a href="#">더 보기</a>
-          <span className="language">🌍 KRW</span>
+          <a href="#">인기</a>
+          <span className="login_btn">로그인</span>
         </nav>
       </div>
     </header>
