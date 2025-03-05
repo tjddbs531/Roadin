@@ -6,6 +6,8 @@ import Login from "./pages/Login"; // 로그인 페이지 추가
 import Sginup from './pages/Signup'; //회원가입 페이지 추가
 import FindId from "./pages/FindId"; //아이디 찾기 페이지 추가
 import FindPwd from "./pages/FindPwd"; //비밀먼호 찾기 페이지 추가
+import Introduce from "./pages/Introduce"; //소개글 페이지 추가
+
 function App() {
   return (
     <Router>
@@ -15,6 +17,7 @@ function App() {
         <Route path="/Signup" element={<Sginup />} />
         <Route path="/FindId" element={<FindId />} />
         <Route path="/FindPwd" element={<FindPwd />} />
+        <Route path="/Introduce" element={<Introduce />} />
       </Routes>
       <Footer />  {/*모든 페이지에 푸터 적용 */}
     </Router>

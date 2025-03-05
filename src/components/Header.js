@@ -11,7 +11,6 @@ function Header() {
             src={`${process.env.PUBLIC_URL}/img/logo.png`} 
             alt="로고" 
           />
-          <span className="logo-text">여행지 소개글</span>
         </div>
 
         {/*검색창*/}
