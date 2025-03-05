@@ -28,12 +28,12 @@ router.get('/:id', (req, res) => {
 // 새로운 댓글 추가
 router.post('/', (req, res) => {
   const {users_id, places_id, birth_at, content} = req.body;
-  db.query('INSERT INTO posts (users_id, places_id, birth_at, content) VALUES (?, ?, ?, ?)', [users_id, places_id, birth_at, content], (err, result) => {
+  db.query('INSERT INTO comments (users_id, places_id, birth_at, content) VALUES (?, ?, ?, ?)', [users_id, places_id, birth_at, content], (err, result) => {
     if (err) {
       console.log(err);  // 오류를 콘솔에 출력
       return res.status(500).send('서버 오류');
     }
-    res.status(201).send('댓글이 추가되었습니다.');
+    res.status(201).send('댓글이 추가되었습니다.'); 
   });
 });
 
@@ -63,7 +63,7 @@ router.delete('/:id', (req, res) => {
 // 댓글 좋아요 추가
 router.post('/', (req, res) => {
     const { users_id } = req.body;
-    const { post_id } = req.params;
+    const { comments_id } = req.params;
   
     // 중복 방지를 위한 체크
     db.query('SELECT * FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, results) => {
@@ -88,7 +88,7 @@ router.post('/', (req, res) => {
     const { users_id } = req.body;
     const { comments_id } = req.params;
   
-    db.query('DELETE FROM comments_like WHERE comments_id = ? AND users_id = ?', [post_id, users_id], (err, result) => {
+    db.query('DELETE FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, result) => {
       if (err) {
         return res.status(500).send('서버 오류');
       }
@@ -97,31 +97,30 @@ router.post('/', (req, res) => {
   });
   
 // 댓글 태그 추가
-router.post('/', (req, res) => {
-    const { comments_id } = req.params;
-    const { tags_id } = req.body;
-  
-    db.query('INSERT INTO comments_tags (comments_id, tags_id) VALUES (?, ?)', [comments_id, tags_id], (err, result) => {
-      if (err) {
-        return res.status(500).send('서버 오류');
-      }
-      res.status(201).send('태그가 추가되었습니다.');
-    });
-  });
-  
+router.post('/:id/tags', (req, res) => {  
+  const { id } = req.params;  // comments_id 가져오기  
+  const { tags_id } = req.body;
+
+  db.query('INSERT INTO comments_tags (comments_id, tags_id) VALUES (?, ?)', [id, tags_id], (err, result) => {  
+    if (err) {  
+      return res.status(500).send('서버 오류');  
+    }  
+    res.status(201).send('태그가 추가되었습니다.');  
+  });  
+});
+
 // 댓글 태그 삭제
-  router.delete('/:tag_id', (req, res) => {
-    const { comments_id } = req.params;
-    const { tag_id } = req.params;
-  
-      db.query('DELETE FROM comments_tags WHERE comments_id = ? AND tags_id = ?', [comments_id, tag_id], (err, result) => {
-      if (err) {
-        return res.status(500).send('서버 오류');
-      }
-      res.send('태그가 삭제되었습니다.');
-    });
-  });
-  
+router.delete('/:id/tags/:tag_id', (req, res) => {  
+  const { id, tag_id } = req.params;  //  comments_id와 tag_id 가져오기  
+
+  db.query('DELETE FROM comments_tags WHERE comments_id = ? AND tags_id = ?', [id, tag_id], (err, result) => {  
+    if (err) {  
+      return res.status(500).send('서버 오류');  
+    }  
+    res.send('태그가 삭제되었습니다.');  
+  });  
+});
+
 
 
 
