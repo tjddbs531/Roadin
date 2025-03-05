@@ -60,42 +60,44 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+
 // 댓글 좋아요 추가
-router.post('/', (req, res) => {
-    const { users_id } = req.body;
-    const { comments_id } = req.params;
-  
-    // 중복 방지를 위한 체크
-    db.query('SELECT * FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, results) => {
+router.post('/:comments_id/like', (req, res) => {
+  const { users_id } = req.body;
+  const { comments_id } = req.params;  // 이제 URL 경로에서 comments_id를 받음
+
+  // 중복 방지를 위한 체크
+  db.query('SELECT * FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, results) => {
+    if (err) {
+      return res.status(500).send('서버 오류');
+    }
+    if (results.length > 0) {
+      return res.status(400).send('이미 좋아요를 누른 상태입니다.');
+    }
+
+    db.query('INSERT INTO comments_like (comments_id, users_id) VALUES (?, ?)', [comments_id, users_id], (err, result) => {
       if (err) {
         return res.status(500).send('서버 오류');
       }
-      if (results.length > 0) {
-        return res.status(400).send('이미 좋아요를 누른 상태입니다.');
-      }
-  
-      db.query('INSERT INTO comments_like (comments_id, users_id) VALUES (?, ?)', [comments_id, users_id], (err, result) => {
-        if (err) {
-          return res.status(500).send('서버 오류');
-        }
-        res.status(201).send('좋아요가 추가되었습니다.');
-      });
+      res.status(201).send('좋아요가 추가되었습니다.');
     });
   });
+});
+
   
-  // 댓글 좋아요 취소
-  router.delete('/', (req, res) => {
-    const { users_id } = req.body;
-    const { comments_id } = req.params;
-  
-    db.query('DELETE FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, result) => {
-      if (err) {
-        return res.status(500).send('서버 오류');
-      }
-      res.send('좋아요가 취소되었습니다.');
-    });
+ // 댓글 좋아요 취소
+router.delete('/:comments_id/like', (req, res) => {
+  const { users_id } = req.body;
+  const { comments_id } = req.params;
+
+  db.query('DELETE FROM comments_like WHERE comments_id = ? AND users_id = ?', [comments_id, users_id], (err, result) => {
+    if (err) {
+      return res.status(500).send('서버 오류');
+    }
+    res.send('좋아요가 취소되었습니다.');
   });
-  
+});
+
 // 댓글 태그 추가
 router.post('/:id/tags', (req, res) => {  
   const { id } = req.params;  // comments_id 가져오기  

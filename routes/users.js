@@ -24,15 +24,19 @@ router.get('/:id', (req, res) => {
   });
 });
 
+
 // 새로운 사용자 추가
 router.post('/', (req, res) => {
-  const { username, email } = req.body;  // 예시 필드
-  db.query('INSERT INTO users (username, email) VALUES (?, ?)', [username, email], (err, result) => {
+  const { name, email } = req.body;  // 예시 필드
+  db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], (err, result) => {
     if (err) {
       return res.status(500).send('서버 오류');
+      
     }
     res.status(201).send('사용자가 추가되었습니다.');
   });
 });
+
+
 
 module.exports = router;
