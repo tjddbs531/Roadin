@@ -85,7 +85,7 @@
 }
 
 /* 로그인 버튼 */
-.login_btn {
+.nav-menu .login_btn {
   background-color: #5A81FA;
   color: white;
   padding: 12px 22px;
@@ -96,6 +96,6 @@
   font-size: 14px;
 }
 
-.login_btn:hover {
+.nav-menu .login_btn:hover {
   background-color: #CEDEFF;
 }

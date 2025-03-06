@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import logo from '../assets/img/logo.svg';
 
 function Header() {
   return (
@@ -8,10 +9,9 @@ function Header() {
     
         <div className="logo">
           <img 
-            src={`${process.env.PUBLIC_URL}/img/logo.png`} 
+            src={logo} 
             alt="로고" 
           />
-          <span className="logo-text">여행지 소개글</span>
         </div>
 
         {/*검색창*/}
@@ -23,7 +23,7 @@ function Header() {
         <nav className="nav-menu">
           <a href="#">살펴보기</a>
           <a href="#">인기</a>
-          <span className="login_btn">로그인</span>
+          <a className="login_btn" href='/myPage'>로그인</a>
         </nav>
       </div>
     </header>
