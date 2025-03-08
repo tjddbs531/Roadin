@@ -37,7 +37,7 @@ router.post(
   (req, res) => {
     const { user_email, user_name, user_pwd, user_phone } = req.body;
 
-    let checkDuplicate = `SELECT user_email FROM Users WHERE user_email = ?`;
+    let checkDuplicate = `SELECT user_email FROM users WHERE user_email = ?`;
     conn.query(checkDuplicate, user_email, async (err, results) => {
       if (err)
         return res.status(500).json({ message: "서버 오류", error: err });
@@ -48,7 +48,7 @@ router.post(
 
       try {
         const hashedPwd = await hashPassword(user_pwd);
-        let sql = `INSERT INTO Users (user_email, user_name, user_pwd, user_phone) VALUES (?, ?, ?, ?)`;
+        let sql = `INSERT INTO users (user_email, user_name, user_pwd, user_phone) VALUES (?, ?, ?, ?)`;
         let values = [user_email, user_name, hashedPwd, user_phone];
 
         conn.query(sql, values, (err) => {
@@ -95,7 +95,7 @@ router.post(
     }
 
     // 토큰이 없으면 비밀번호 확인 후 로그인 처리
-    let sql = "SELECT * FROM Users WHERE user_email = ?";
+    let sql = "SELECT * FROM users WHERE user_email = ?";
     conn.query(sql, user_email, (err, results) => {
       if (err) {
         console.error(err);
@@ -138,7 +138,7 @@ router.get("/mypage", authMiddleware, (req, res) => {
   const user_email = req.user.email;
 
   let sql =
-    "SELECT user_email, user_name, user_phone FROM Users WHERE user_email = ?";
+    "SELECT user_email, user_name, user_phone FROM users WHERE user_email = ?";
   conn.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
@@ -156,7 +156,7 @@ router.get("/mypage", authMiddleware, (req, res) => {
 
 // 회원 개별 수정
 router.put(
-  "/mypage",
+  "/mypage/modify",
   authMiddleware,
   [validationRules.phone, validate],
   (req, res) => {
@@ -181,7 +181,7 @@ router.put(
 
     values.push(user_email);
 
-    let sql = `UPDATE Users SET ${updates.join(", ")} WHERE user_email = ?`;
+    let sql = `UPDATE users SET ${updates.join(", ")} WHERE user_email = ?`;
     conn.query(sql, values, (err, result) => {
       if (err) {
         console.error(err);
@@ -198,7 +198,7 @@ router.put(
 router.delete("/mypage", authMiddleware, (req, res) => {
   const user_email = req.user.email;
 
-  let sql = "DELETE FROM Users WHERE user_email = ?";
+  let sql = "DELETE FROM users WHERE user_email = ?";
   conn.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
@@ -214,6 +214,32 @@ router.delete("/mypage", authMiddleware, (req, res) => {
   });
 });
 
+// 아이디 찾기
+router.post(
+  "/findId",
+  [validationRules.name, validationRules.phone, validate],
+  (req, res) => {
+    const { user_name, user_phone } = req.body;
+
+    let sql =
+      "SELECT user_email FROM users WHERE user_name = ? AND user_phone = ?";
+    conn.query(sql, [user_name, user_phone], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "서버 오류", error: err });
+      }
+
+      if (results.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "아이디와 연락처를 다시 확인해주세요." });
+      }
+
+      res.status(200).json({ user_email: results[0].user_email });
+    });
+  }
+);
+
 // 비밀번호 찾기
 router.post(
   "/resetPwd",
@@ -226,7 +252,7 @@ router.post(
   (req, res) => {
     const { user_name, user_phone, new_pwd } = req.body;
 
-    let sql = "SELECT * FROM Users WHERE user_name = ? AND user_phone = ?";
+    let sql = "SELECT * FROM users WHERE user_name = ? AND user_phone = ?";
     conn.query(sql, [user_name, user_phone], async (err, results) => {
       if (err) {
         console.error(err);
@@ -241,7 +267,7 @@ router.post(
 
       try {
         const hashedPwd = await hashPassword(new_pwd);
-        let updateSql = "UPDATE Users SET user_pwd = ? WHERE user_phone = ?";
+        let updateSql = "UPDATE users SET user_pwd = ? WHERE user_phone = ?";
         conn.query(updateSql, [hashedPwd, user_phone], (err) => {
           if (err) {
             console.error(err);
