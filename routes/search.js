@@ -1,5 +1,6 @@
 const express = require('express');
-const { query, validationResult } = require('express-validator');
+const { query, param,validationResult } = require('express-validator');
+const axios = require('axios');
 const db = require('../db');
 
 const router = express.Router();
@@ -14,29 +15,131 @@ const validate = (req, res, next) => {
     }
 };
 
-router.get('/',
+router.get('/place/:name',  
     [
-        query('q')
-            .trim()
-            .notEmpty().withMessage('검색어를 입력하세요.')
-            .isLength({ min: 2 }).withMessage('검색어는 최소 2자 이상 입력해야 합니다.'),
+        param('name').notEmpty().isString().withMessage('도시 이름을 입력하세요.'),
         validate
     ],
     (req, res) => {
-        const queryText = req.query.q;
+    const placesname = req.params.name;
 
-        try {
-            const connection = db;
-            const [results] = connection.execute(
-                "SELECT name FROM items WHERE name LIKE ? or tags LIKE ? LIMIT 5", 
-                [`%${queryText}%`, `%${queryText}%`]
-            );
-            res.json(results);
-        } catch (err) {
-            console.error('검색 오류:', err);
-            res.status(500).json({ error: '서버 오류' });
+    const username = process.env.GEONAME_USERNAME;
+    const maxRows = 10;
+    const restype = "json"
+
+    // Geonames API를 사용하여 도시 검색
+    axios.get(`http://api.geonames.org/searchJSON?`, {
+        params: {
+            q: placesname,
+            username: username,
+            maxRows : maxRows,
+            restype : restype
         }
-    }
-);
+    })
+    .then(response => {
+        const placeData = response.data.geonames[0];
+        console.log(placeData);
+        if (!placeData) {
+            res.status(404).send({ message: '도시를 찾을 수 없습니다.' });
+            return;
+        }
+
+        // 해당 도시의 장소 조회
+        const cityId = placeData.geonameId;
+        const query = `SELECT p.place_name FROM places p WHERE p.geo_id = ?`;
+
+        db.execute(query, [cityId], (err, rows) => {
+            if (err) {
+                console.error('장소 검색 실패:', err);
+                res.status(500).send({ message: '장소 검색 실패' });
+                return;
+            }
+
+            res.status(200).send({ message: '장소 목록', data: rows });
+        });
+    })
+    .catch(error => {
+        console.error('Geonames API 호출 실패:', error);
+        res.status(500).send({ message: 'Geonames API 호출 실패' });
+    });
+});
+
+router.get('/tag/:tag_name',
+    [
+        param('tag_name').notEmpty().isString().withMessage('태그 이름을 입력하세요.'),
+        validate
+    ],
+    (req, res) => {
+    const tag_name = req.params.tag_name;
+
+    let sql = `SELECT p.* FROM places p 
+                JOIN place_tags pt ON p.geo_id = pt.place_id 
+                JOIN tags t ON pt.tag_id = t.id 
+                WHERE t.tag_name = ?;`
+
+    db.execute(sql, [tag_name], (err, rows) => {
+        console.log(rows)
+        if (err) {
+            console.error('장소 검색 실패:', err);
+            res.status(500).send({ message: '장소 검색 실패' });
+            return;
+        }
+        if(rows.length == 0){
+            console.error('장소 검색 실패:', err);
+            res.status(500).send({ message: '장소 검색 실패' });
+            return;
+        }
+        res.status(200).send({ message: '장소 목록', data: rows });
+    });
+});
+
+router.post('/place_add',  
+    [
+        param('name').notEmpty().isString().withMessage('도시 이름을 입력하세요.'),
+        validate
+    ],
+    (req, res) => {
+    const {geo} = res.body;
+
+    const username = process.env.GEONAME_USERNAME;
+    const maxRows = 10;
+    const restype = "json"
+
+    // Geonames API를 사용하여 도시 검색
+    axios.get(`http://api.geonames.org/searchJSON?`, {
+        params: {
+            q: placesname,
+            username: username,
+            maxRows : maxRows,
+            restype : restype
+        }
+    })
+    .then(response => {
+        const placeData = response.data.geonames[0];
+        console.log(placeData);
+        if (!placeData) {
+            res.status(404).send({ message: '도시를 찾을 수 없습니다.' });
+            return;
+        }
+
+        // 해당 도시의 장소 조회
+        const cityId = placeData.geonameId;
+        const query = `SELECT p.place_name FROM places p WHERE p.geo_id = ?`;
+
+        db.execute(query, [cityId], (err, rows) => {
+            if (err) {
+                console.error('장소 검색 실패:', err);
+                res.status(500).send({ message: '장소 검색 실패' });
+                return;
+            }
+
+            res.status(200).send({ message: '장소 목록', data: rows });
+        });
+    })
+    .catch(error => {
+        console.error('Geonames API 호출 실패:', error);
+        res.status(500).send({ message: 'Geonames API 호출 실패' });
+    });
+});
 
 module.exports = router;
