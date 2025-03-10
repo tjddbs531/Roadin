@@ -128,3 +128,50 @@
 .complete_btn_container .edit_btn {
     background-color: #CEDEFF;
 }
+
+.like_tags {
+    width: 750px;
+}
+
+.like_title {
+    font-family: 'PretendardBold';
+    font-size: 20px;
+}
+
+.tags_container {
+    display: flex;
+}
+
+.tag {
+    padding: 20px 26px;
+    border: 1px solid #d9d9d9;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    color: #5A81FA;
+}
+
+.all_tags_container {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tags {
+    padding: 20px 26px;
+    background-color: #d9d9d9;
+    border-radius: 60px;
+    gap: 12px;
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+.tags.active {
+    background-color: #CEDEFF;
+}
