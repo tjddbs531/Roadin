@@ -6,7 +6,6 @@ import Login from "./pages/Login"; // 로그인 페이지 추가
 import MyPage from "./pages/Main/MyPage/MyPage";
 import MyPageEdit from "./pages/Main/MyPage/MyPageEdit";
 
-
 function App() {
   return (
     <Router>

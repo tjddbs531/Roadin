@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import './MyPage.css';
 import profile from '../../../assets/img/profile.svg';
+import { useNavigate } from "react-router-dom";
 
 function MyPage() {
+  const navigate = useNavigate();
+  
   return (
     <div className='mypage_container'>
         <div className='porfile_container'>
@@ -23,8 +26,8 @@ function MyPage() {
                 </div>
 
                 <div className='btn_container'>
-                  <a className='delete_btn'>계정탈퇴</a>
-                  <a className='edit_btn' href='/myPage/edit'>수정하기</a>
+                  <button className='delete_btn'>계정탈퇴</button>
+                  <button className='edit_btn' onClick={() => navigate("/myPage/edit")}>수정하기</button>
                 </div>
             </div>
         </div>
