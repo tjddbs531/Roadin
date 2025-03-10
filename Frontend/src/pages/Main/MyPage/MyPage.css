@@ -129,8 +129,9 @@
     background-color: #CEDEFF;
 }
 
-.like_tags {
+.likes_container {
     width: 750px;
+    margin-top: 80px;
 }
 
 .like_title {
@@ -174,4 +175,43 @@
 
 .tags.active {
     background-color: #CEDEFF;
+}
+
+.likes_container {
+    width: 750px;
+    margin-top: 80px;
+}
+
+.like_places_container {
+    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.places {
+    background-color: #484848;
+    width: 240px;
+    height: 240px;
+    border-radius: 10px;
+    font-family: 'PretendardBold';
+    font-size: 24px;
+    color: white;
+    position: relative;
+}
+
+.places::after {
+    content: "서울";
+    position: absolute;
+    left: 21px;
+    bottom: 15px;
+    font-family: 'PretendardBold';
+    font-size: 24px;
+    color: white;
+}
+
+.places img {
+    position: absolute;
+    top: 12px;
+    right: 12px;
 }

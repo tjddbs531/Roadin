@@ -4,6 +4,7 @@ import './MyPage.css';
 import profile from '../../../assets/img/profile.svg';
 import x from '../../../assets/img/x.svg';
 import plus from '../../../assets/img/plus.svg';
+import like_active from '../../../assets/img/ic_like_active.svg';
 
 function MyPage() {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ function MyPage() {
                 </div>
             </div>
 
-            <div className='like_tags'>
+            <div className='likes_container'>
               <p className='like_title'>선호 해시태그</p>
               
               <div className='tags_container'>
@@ -86,6 +87,18 @@ function MyPage() {
                     <div className={`tags ${activeTag.includes('부모님과 함께하는') ? 'active' : ''}`} onClick={() => toggleTag('부모님과 함께하는')}>부모님과 함께하는</div>
                   </div>
               )}
+            </div>
+
+            <div className='likes_container' style={{marginBottom: 80}}>
+              <p className='like_title'>좋아요</p>
+              <div className='like_places_container'>
+                <div className="places">
+                  <img src={like_active}/>
+                </div>
+                <div className="places">
+                  <img src={like_active}/>
+                </div>
+              </div>
             </div>
         </div>
     </div>
