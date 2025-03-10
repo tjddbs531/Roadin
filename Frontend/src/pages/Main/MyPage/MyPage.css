@@ -141,6 +141,8 @@
 
 .tags_container {
     display: flex;
+    gap: 12px;
+
 }
 
 .tag {
@@ -149,7 +151,6 @@
     border-radius: 60px;
     display: flex;
     justify-content: center;
-    gap: 12px;
     color: #5A81FA;
 }
 

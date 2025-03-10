@@ -45,10 +45,10 @@ function Main() {
           </div>
         </section>
 
-        <section className='tags'>
+        <section className='hashtags'>
           <h3>인기 해시태그</h3>
           <p>어떤 테마를 원하시나요?</p>
-          <div className='tags_container'>
+          <div className='hashtags_container'>
             <div className='hashtag'>#</div>
             <div className='hashtag'>활동적인</div>
             <div className='hashtag'>휴식</div>
