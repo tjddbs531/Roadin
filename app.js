@@ -11,4 +11,4 @@ const favoritetagsRouter = require("./routes/favoritetags");
 app.use(cookieParser());
 app.use(express.json());
 app.use("/", userRouter);
-app.use("/mypage/", favoritetagsRouter);
+app.use("/mypage", favoritetagsRouter);
