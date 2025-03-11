@@ -69,6 +69,7 @@
   margin-left: 20px;
   font-size: 14px;
   font-weight: 500;
+  font-family: 'PretendardRegular';
 }
 
 .nav-menu a:hover {
@@ -81,4 +82,20 @@
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+}
+
+/* 로그인 버튼 */
+.nav-menu .login_btn {
+  background-color: #5A81FA;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 50px;
+  margin-left: 20px;
+  cursor: pointer;
+  font-family: 'PretendardRegular';
+  font-size: 14px;
+}
+
+.nav-menu .login_btn:hover {
+  background-color: #CEDEFF;
 }

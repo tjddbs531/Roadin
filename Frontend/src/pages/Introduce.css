@@ -1,0 +1,134 @@
+/* 전체 페이지 기본 설정 (스크롤 여백 제거) */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* 가로 스크롤 제거 */
+  }
+  
+  /* 최상위 컨테이너 (푸터가 아래로 가도록 설정) */
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* 메인 컨텐츠를 확장해서 푸터를 아래로 밀어냄 */
+  .main-content {
+    flex: 1;
+    padding-bottom: 50px; /* 푸터와 겹치는 문제 방지 */
+  }
+  
+  /* 여행지 소개 컨테이너 */
+  .introduce-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* 여행지 이미지 */
+  .place-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* 환율, 날씨, 지도 컨테이너 */
+  .currency-info, .weather-info, .map-container {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  /* 지도 영역 */
+  .map-box {
+    width: 100%;
+    height: 300px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  
+  /* 좋아요 버튼 */
+  .like-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+ /* ✅ 해시태그 전체 컨테이너 가운데 정렬 */
+.hashtags {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center;
+  }
+  
+  /* 기본 해시태그 스타일 */
+  .hashtag {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ddd;
+    color: #333; /* 기본 색상 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 색상 전환 */
+  }
+  
+  /* ✅ 클릭한 해시태그 스타일 (더 확실한 구분) */
+  .hashtag.selected {
+    background-color: #007bff; /* 클릭 후 파란색 */
+    color: white;
+    font-weight: bold;
+    border: 2px solid #0056b3; /* 선택된 상태 강조 */
+  }
+  
+  
+  /* 댓글 섹션 */
+  .review-section {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .review-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .review-form input {
+    flex-grow: 1;
+    padding: 8px;
+  }
+  
+  .review-form button {
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* 푸터 스타일 */
+  .footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    margin-top: auto;
+  }
+  
