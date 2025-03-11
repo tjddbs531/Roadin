@@ -16,7 +16,7 @@ const validate = (req, res, next) => {
 };
 
 
-// GEONAME API 변수수
+// GEONAME API 변수
 const username = process.env.GEONAME_USERNAME;
 const maxRows = 10;
 const restype = "json"
@@ -49,6 +49,7 @@ router.post('/add',
 
         // 해당 도시의 장소 조회
         const place_geo_id = parseInt(placeData.geonameId)
+        // const place_latitude = parseFloat(place)
         const place_values = [place_geo_id, place_name, place_info]
         const query = `INSERT INTO places (geo_id, place_name, place_info) VALUES (?,?,?)`;
         console.log(place_values)
