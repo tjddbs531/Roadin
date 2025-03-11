@@ -1,0 +1,57 @@
+.findpwd-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.findpwd-box {
+    width: 350px;
+    height: 300px; /* ✅ 높이를 자동 조정 (내용에 맞게) */
+    padding: 20px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.findpwd-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.findpwd-input {
+    width: 90%;
+    height: 20px; /* ✅ 입력 필드 높이 조정 */
+    padding: 10px;
+    margin: 5px 0; /* ✅ 위아래 간격을 5px로 줄임 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top:15px;
+}
+
+.findpwd-button {
+    width: 96%;
+    padding: 12px; /* ✅ 버튼 크기 통일 */
+    background-color: #5A81FA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px; /* ✅ 버튼 위 간격 조정 */
+    font-size: 16px;
+    transition: background 0.2s ease;
+}
+
+.findpwd-button:hover {
+    background-color: #4c64f0;
+}
+
+.findpwd-result {
+    margin-top: 15px;
+    font-weight: bold;
+    color: green;
+}
+
+
