@@ -1,14 +1,18 @@
 import React from "react";
 import "./Header.css";
+import logo from '../assets/img/logo.svg';
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  
   return (
     <header className="header">
       <div className="header-container">
     
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")} style={{cursor: "pointer"}}>
           <img 
-            src={`${process.env.PUBLIC_URL}/img/logo.png`} 
+            src={logo} 
             alt="로고" 
           />
         </div>
@@ -21,10 +25,8 @@ function Header() {
         {/*네비게이션 메뉴*/}
         <nav className="nav-menu">
           <a href="#">살펴보기</a>
-          <a href="#">여행</a>
-          <a href="#">리뷰</a>
-          <a href="#">더 보기</a>
-          <span className="language">🌍 KRW</span>
+          <a href="#">인기</a>
+          <a className="login_btn" href='/myPage'>로그인</a>
         </nav>
       </div>
     </header>
