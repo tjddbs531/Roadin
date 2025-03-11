@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom"; // ✅ 페이지 이동 �
 
 function Login() {
   const [formData, setFormData] = useState({
-    emailOrUsername: "",
-    password: "",
+    user_email: "", // ✅ 기존 emailOrUsername -> user_email로 변경 (백엔드 요청 데이터와 일치)
+    user_pwd: "",   // ✅ 기존 password -> user_pwd로 변경
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,11 +28,20 @@ function Login() {
     setError("");
 
     try {
-      const response = await login(formData); // ✅ 로그인 API 호출
-      alert(response.message || "로그인 성공!");
+      // ✅ 백엔드 API 요청 형식에 맞게 수정
+      const response = await login({
+        user_email: formData.user_email,
+        user_pwd: formData.user_pwd,
+      });
+
+      // ✅ 토큰 저장 (쿠키 or 로컬스토리지)
+      localStorage.setItem("token", response.token);
+
+      alert(`${response.user.user_name}님, 환영합니다!`);
       navigate("/"); // ✅ 로그인 후 메인 페이지로 이동 (필요에 따라 변경 가능)
     } catch (error) {
-      setError(error); // 에러 메시지 저장
+      // ✅ 백엔드에서 응답 메시지가 있으면 그대로 표시
+      setError(error.response?.data?.message || "로그인 실패. 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
@@ -44,23 +53,23 @@ function Login() {
         <h2 className="login-title">로그인하여 여행을 계획하세요</h2>
 
         <div className="input-container">
-          {/* 아이디 또는 이메일 입력 */}
+          {/* 이메일 입력 */}
           <input
-            type="text"
-            name="emailOrUsername"
-            placeholder="아이디 또는 이메일"
+            type="email"
+            name="user_email" // ✅ name 수정 (백엔드 데이터와 일치)
+            placeholder="이메일"
             className="login-input"
-            value={formData.emailOrUsername}
+            value={formData.user_email}
             onChange={handleChange}
           />
 
           {/* 비밀번호 입력 */}
           <input
             type="password"
-            name="password"
+            name="user_pwd" // ✅ name 수정 (백엔드 데이터와 일치)
             placeholder="비밀번호"
             className="login-input"
-            value={formData.password}
+            value={formData.user_pwd}
             onChange={handleChange}
           />
         </div>
