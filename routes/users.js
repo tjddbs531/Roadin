@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const conn = require("../config/mariadb");
 const jwt = require("jsonwebtoken");
+const { StatusCodes } = require("http-status-codes");
 const { validate, validationRules } = require("../middlewares/validation");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -40,10 +41,14 @@ router.post(
     let checkDuplicate = `SELECT user_email FROM users WHERE user_email = ?`;
     conn.query(checkDuplicate, user_email, async (err, results) => {
       if (err)
-        return res.status(500).json({ message: "서버 오류", error: err });
+        return res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "서버 오류", error: err });
 
       if (results.length) {
-        return res.status(409).json({ message: "이미 존재하는 이메일입니다." });
+        return res
+          .status(StatusCodes.CONFLICT)
+          .json({ message: "이미 존재하는 이메일입니다." });
       }
 
       try {
@@ -54,14 +59,14 @@ router.post(
         conn.query(sql, values, (err) => {
           if (err) {
             console.log(err);
-            return res.status(400).end();
+            return res.status(StatusCodes.BAD_REQUEST).end();
           }
-          res.status(201).json({ message: "회원가입 성공!" });
+          res.status(StatusCodes.CREATED).json({ message: "회원가입 성공!" });
         });
       } catch (err) {
         console.error(err);
         return res
-          .status(500)
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ message: "비밀번호 해싱 오류", error: err });
       }
     });
@@ -83,10 +88,10 @@ router.post(
           console.error("토큰 검증 오류:", err);
           res.clearCookie("token"); // 만료된 토큰 삭제
           return res
-            .status(401)
+            .status(StatusCodes.UNAUTHORIZED)
             .json({ message: "세션이 만료되었습니다. 다시 로그인해주세요." });
         }
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
           message: `${decoded.name}님 환영합니다. 메인 페이지로 이동합니다.`,
           token: token,
         });
@@ -99,11 +104,15 @@ router.post(
     conn.query(sql, user_email, (err, results) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "서버 오류", error: err });
+        return res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "서버 오류", error: err });
       }
 
       if (results.length === 0) {
-        return res.status(401).json({ message: "존재하지 않는 이메일입니다." });
+        return res
+          .status(StatusCodes.UNAUTHORIZED)
+          .json({ message: "존재하지 않는 이메일입니다." });
       }
 
       const loginUser = results[0];
@@ -111,12 +120,14 @@ router.post(
       bcrypt.compare(user_pwd, loginUser.user_pwd, (err, isMatch) => {
         if (err) {
           console.error("비밀번호 검증 오류:", err);
-          return res.status(500).json({ message: "서버 오류", error: err });
+          return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: "서버 오류", error: err });
         }
 
         if (!isMatch) {
           return res
-            .status(401)
+            .status(StatusCodes.UNAUTHORIZED)
             .json({ message: "아이디 또는 비밀번호가 일치하지 않습니다." });
         }
 
@@ -124,7 +135,7 @@ router.post(
         const newToken = generateToken(loginUser);
         res.cookie("token", newToken, { httpOnly: true });
 
-        res.status(200).json({
+        res.status(StatusCodes.OK).json({
           message: `${loginUser.user_name}님 환영합니다. 메인 페이지로 이동합니다.`,
           token: newToken,
         });
@@ -142,14 +153,18 @@ router.get("/mypage", authMiddleware, (req, res) => {
   conn.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "서버 오류", error: err });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: "서버 오류", error: err });
     }
 
     if (results.length) {
-      res.status(200).json(results[0]);
+      res.status(StatusCodes.OK).json(results[0]);
     } else {
       console.log(err);
-      res.status(404).json({ message: "존재하지 않는 회원입니다." });
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "존재하지 않는 회원입니다." });
     }
   });
 });
@@ -176,7 +191,9 @@ router.put(
     }
 
     if (updates.length === 0) {
-      return res.status(400).json({ message: "변경할 정보를 입력하세요." });
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "변경할 정보를 입력하세요." });
     }
 
     values.push(user_email);
@@ -185,10 +202,12 @@ router.put(
     conn.query(sql, values, (err, result) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "서버 오류", error: err });
+        return res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "서버 오류", error: err });
       }
       res
-        .status(200)
+        .status(StatusCodes.OK)
         .json({ message: "회원 정보가 성공적으로 수정되었습니다." });
     });
   }
@@ -202,15 +221,21 @@ router.delete("/mypage", authMiddleware, (req, res) => {
   conn.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "서버 오류", error: err });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: "서버 오류", error: err });
     }
 
     if (results.affectedRows === 0) {
-      return res.status(404).json({ message: "회원 정보를 찾을 수 없습니다." });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "회원 정보를 찾을 수 없습니다." });
     }
 
     res.clearCookie("token");
-    return res.status(200).json({ message: "회원 탈퇴가 완료되었습니다." });
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "회원 탈퇴가 완료되었습니다." });
   });
 });
 
@@ -226,16 +251,18 @@ router.post(
     conn.query(sql, [user_name, user_phone], (err, results) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "서버 오류", error: err });
+        return res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "서버 오류", error: err });
       }
 
       if (results.length === 0) {
         return res
-          .status(404)
+          .status(StatusCodes.NOT_FOUND)
           .json({ message: "아이디와 연락처를 다시 확인해주세요." });
       }
 
-      res.status(200).json({ user_email: results[0].user_email });
+      res.status(StatusCodes.OK).json({ user_email: results[0].user_email });
     });
   }
 );
@@ -256,12 +283,14 @@ router.post(
     conn.query(sql, [user_name, user_phone], async (err, results) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "서버 오류", error: err });
+        return res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "서버 오류", error: err });
       }
 
       if (results.length === 0) {
         return res
-          .status(404)
+          .status(StatusCodes.NOT_FOUND)
           .json({ message: "일치하는 사용자 정보가 없습니다." });
       }
 
@@ -272,17 +301,17 @@ router.post(
           if (err) {
             console.error(err);
             return res
-              .status(500)
+              .status(StatusCodes.INTERNAL_SERVER_ERROR)
               .json({ message: "비밀번호 변경 오류", error: err });
           }
           res
-            .status(200)
+            .status(StatusCodes.OK)
             .json({ message: "비밀번호가 성공적으로 변경되었습니다." });
         });
       } catch (err) {
         console.error(err);
         return res
-          .status(500)
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ message: "비밀번호 해싱 오류", error: err });
       }
     });

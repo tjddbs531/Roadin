@@ -36,6 +36,9 @@ const validationRules = {
     .isString()
     .matches(/^01[016789]\d{8}$/)
     .withMessage("연락처를 다시 확인해주세요."),
+  tag_names: body("tag_names")
+    .isArray()
+    .withMessage("태그 목록은 배열이어야 합니다."),
 };
 
 module.exports = { validate, validationRules };
