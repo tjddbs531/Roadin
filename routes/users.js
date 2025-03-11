@@ -1,11 +1,10 @@
-
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const conn = require("../config/mariadb");
 const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
-const { validate, validationRules } = require("../middlewares/validation");
+const { validate, validationRules } = requ-ire("../middlewares/validation");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // 비밀번호 해싱 함수
@@ -318,6 +317,5 @@ router.post(
     });
   }
 );
-
 
 module.exports = router;
