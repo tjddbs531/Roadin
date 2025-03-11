@@ -38,7 +38,7 @@ function Login() {
       localStorage.setItem("token", response.token);
 
       alert(`${response.user.user_name}님, 환영합니다!`);
-      navigate("/"); // ✅ 로그인 후 메인 페이지로 이동 (필요에 따라 변경 가능)
+      navigate("/myPage"); // ✅ 로그인 후 메인 페이지로 이동 (필요에 따라 변경 가능)
     } catch (error) {
       // ✅ 백엔드에서 응답 메시지가 있으면 그대로 표시
       setError(error.response?.data?.message || "로그인 실패. 다시 시도해주세요.");
