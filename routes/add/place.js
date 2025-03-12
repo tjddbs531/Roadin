@@ -46,6 +46,16 @@ router.post('/add',
             return;
         }
 
+
+        db.query('SELECT * FROM places WHERE geo_id = ?', [placeData.geonameId], (err, results) => {
+            if (err) {
+              return res.status(500).send('서버 오류');
+            }
+            if (results.length > 0) {
+              return res.status(400).send('이미 있는 도시입니다.');
+            }
+        })
+
         // 해당 도시의 장소 조회
         const place_geo_id = parseInt(placeData.geonameId)
         const place_lat = parseFloat(placeData.lat)

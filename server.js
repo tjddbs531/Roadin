@@ -18,11 +18,14 @@ app.use(cors());
 
 const searchRouter = require('./routes/search');
 
-const cityRouter = require('./routes/place/place');
+const cityRouter = require('./routes/add/place');
+const tagRouter = require('./routes/add/tag');
+
 const placelikesRouter = require("./routes/place/placelikes");
 const placesRoutes = require('./routes/place/places');
 const popularRouter = require('./routes/place/popular');
 const placeTagsRoutes = require('./routes/place/placeTags');
+
 
 const favoriteplacesRouter = require("./routes/user/favoriteplaces");
 const favoritetagsRouter = require("./routes/user/favoritetags");
@@ -34,6 +37,8 @@ const commentsRoutes = require('./routes/comment/comments');
 app.use('/search', searchRouter);
 
 app.use('/place', cityRouter);
+app.use('/tag', tagRouter);
+
 app.use("/placelikes", placelikesRouter);
 app.use('/places', placesRoutes);
 app.use('/popular', popularRouter);
