@@ -2,9 +2,10 @@ const express = require('express');
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db = require('./db');
-
 require('dotenv').config();
+
+console.log(process.env)
+const db = require('./db');
 
 const GEONAME_API_URL = process.env.GEONAME_API_URL;
 const GEONAME_USERNAME = process.env.GEONAME_USERNAME; 
