@@ -33,13 +33,13 @@ function Main() {
             <h3>인기 장소 Top 3</h3>
             <div className='img_container'>
               <div className="popular_box">
-                <img src={like_active}/>
+                <img src={like_active} alt='like'/>
               </div>
               <div className="popular_box">
-                <img src={like_unactive}/>
+                <img src={like_unactive} alt='unlike'/>
               </div>
               <div className="popular_box">
-                <img src={like_unactive}/>
+                <img src={like_unactive} alt='unlike'/>
               </div>
             </div>
           </div>

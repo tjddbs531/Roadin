@@ -62,7 +62,7 @@ router.post('/add',
 
             res.status(200).send({ 
                 message: '추가된 장소', 
-                geo_id : geo_id,
+                geo_id : place_geo_id,
                 place_name : place_name,
                 place_info : place_info
             });

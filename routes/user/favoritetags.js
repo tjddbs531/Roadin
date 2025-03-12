@@ -15,13 +15,13 @@ router.get("/all", authMiddleware, getUserId, (req, res) => {
 
   let sql = `
     SELECT 
-        tags.tag_name, 
+        Tags.tag_name, 
         CASE 
             WHEN tags_likes.user_id IS NOT NULL THEN true 
             ELSE false 
         END AS is_selected
-    FROM tags
-    LEFT JOIN tags_likes ON tags.id = tags_likes.tag_id AND tags_likes.user_id = ?;
+    FROM Tags
+    LEFT JOIN tags_likes ON Tags.id = tags_likes.tag_id AND tags_likes.user_id = ?;
   `;
 
   db.query(sql, [user_id], (err, results) => {

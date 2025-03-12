@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import './MyPage.css';
 import profile from '../../assets/img/profile.svg';
 import x from '../../assets/img/x.svg';
@@ -9,10 +10,36 @@ import like_active from '../../assets/img/ic_like_active.svg';
 function MyPage() {
   const navigate = useNavigate();
 
+  const [userData, setUserData] = useState([]);
+  const [tags, setTags] = useState([]);
   const [viewAllTags, setViewAllTags] = useState(false);
   const [activeTag, setActiveTag] = useState([]);
 
-  const viewAll = () => { // 전체 태그 확인하는 함수
+  // 회원 정보 조회 API 호출
+  useEffect(() => {    
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxNzcwNDI1LCJleHAiOjE3NDE3NzIyMjV9.7Qqp3Q2B2_0M3uzILMCWNhH9JeWKrgVhZjOzk_OctOY';
+
+    const fetchUserData = axios.get(`http://localhost:3000/mypage`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const fetchTags = axios.get(`http://localhost:3000/mypage/favoritetags/all`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    Promise.all([fetchUserData, fetchTags])
+      .then(([userDataResponse, tagsResponse]) => {
+        setUserData(userDataResponse.data);
+        setTags(tagsResponse.data.tags);
+        console.log(tags);
+      })
+      .catch((error) => {
+        console.log('API 요청 오류 : ', error);
+      });
+  }, []);
+
+  // 전체 태그 확인하는 함수
+  const viewAll = () => { 
     setViewAllTags(!viewAllTags);
   }
 
@@ -36,20 +63,20 @@ function MyPage() {
   return (
     <div className='mypage_container'>
         <div className='porfile_container'>
-            <img src={profile} />
+            <img src={profile} alt='profile'/>
 
             <div className='information'>
                 <div className='info_txt_contianer'>
                     <p className='info_title'>이름</p>
-                    <p className='info_content'>가나다</p>
+                    <p className='info_content'>{userData.user_name}</p>
                 </div>
                 <div className='info_txt_contianer'>
                     <p className='info_title'>이메일</p>
-                    <p className='info_content'>abc@email.com</p>
+                    <p className='info_content'>{userData.user_email}</p>
                 </div>
                 <div className='info_txt_contianer'>
                     <p className='info_title'>연락처</p>
-                    <p className='info_content'>010-1234-5678</p>
+                    <p className='info_content'>{userData.user_phone}</p>
                 </div>
 
                 <div className='btn_container'>
@@ -75,16 +102,21 @@ function MyPage() {
                  </div>
                 ))}
                 <div className='tag' style={{color: 'black', cursor: 'pointer'}} onClick={() => viewAll()}>
-                  <img src={plus} width={14}/>
+                  <img src={plus} width={14} alt='plus'/>
                 </div>
               </div>
 
               {viewAllTags && (
                   <div className='all_tags_container'>
-                    <div className={`tags ${activeTag.includes('힐링') ? 'active' : ''}`} onClick={() => toggleTag('힐링')}>힐링</div>
-                    <div className={`tags ${activeTag.includes('활동적인') ? 'active' : ''}`} onClick={() => toggleTag('활동적인')}>활동적인</div>
-                    <div className={`tags ${activeTag.includes('친구들과 함께하는') ? 'active' : ''}`} onClick={() => toggleTag('친구들과 함께하는')}>친구들과 함께하는</div>
-                    <div className={`tags ${activeTag.includes('부모님과 함께하는') ? 'active' : ''}`} onClick={() => toggleTag('부모님과 함께하는')}>부모님과 함께하는</div>
+                    {tags.map((tag, index) => (
+                      <div 
+                        key={index}
+                        className={`tags ${activeTag.includes(tag.tag_name) ? 'active' : ''}`} 
+                        onClick={() => toggleTag(tag.tag_name)}
+                      >
+                        {tag.tag_name}
+                      </div>
+                    ))}
                   </div>
               )}
             </div>
@@ -93,10 +125,10 @@ function MyPage() {
               <p className='like_title'>좋아요</p>
               <div className='like_places_container'>
                 <div className="places">
-                  <img src={like_active}/>
+                  <img src={like_active} alt='like'/>
                 </div>
                 <div className="places">
-                  <img src={like_active}/>
+                  <img src={like_active} alt='like'/>
                 </div>
               </div>
             </div>

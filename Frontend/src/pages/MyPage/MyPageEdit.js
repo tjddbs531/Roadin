@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './MyPage.css';
 import profile from '../../assets/img/profile.svg';
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ function MyPageEdit() {
   return (
     <div className='mypage_container'>
         <div className='porfile_container'>
-            <img src={profile} />
+            <img src={profile} alt='profile'/>
 
             <div className='information'>
                 <div className='info_txt_contianer'>
