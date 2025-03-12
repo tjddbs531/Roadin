@@ -21,32 +21,30 @@ const searchRouter = require('./routes/search');
 const cityRouter = require('./routes/place/place');
 const placelikesRouter = require("./routes/place/placelikes");
 const placesRoutes = require('./routes/place/places');
-const popularRouter = require('./routes/place/popular_place');
+const popularRouter = require('./routes/place/popular');
+const placeTagsRoutes = require('./routes/place/placeTags');
 
 const favoriteplacesRouter = require("./routes/user/favoriteplaces");
 const favoritetagsRouter = require("./routes/user/favoritetags");
 const userRouter = require("./routes/user/users");
 
-const commentsRoutes = require('./routes/post/comments');
-const postLikesRoutes = require('./routes/post/postLikes');
-const postsRoutes = require('./routes/post/posts');
-const postTagsRoutes = require('./routes/post/postTags');
+const commentsRoutes = require('./routes/comment/comments');
+
 
 app.use('/search', searchRouter);
 
 app.use('/place', cityRouter);
 app.use("/placelikes", placelikesRouter);
 app.use('/places', placesRoutes);
-app.use('/popular_place', popularRouter);
+app.use('/popular', popularRouter);
 
 app.use("/mypage/favoriteplaces", favoriteplacesRouter);
 app.use("/mypage/favoritetags", favoritetagsRouter);
 app.use("/", userRouter);
 
 app.use('/comments', commentsRoutes);
-app.use('/posts/:post_id/like', postLikesRoutes);
-app.use('/posts', postsRoutes);
-app.use('/posts/:post_id/tags', postTagsRoutes);
+
+app.use('/place/:place_id/tags', placeTagsRoutes);
 
 
 app.listen(process.env.PORT);
