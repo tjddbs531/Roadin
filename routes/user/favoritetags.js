@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const conn = require("../config/mariadb");
-const authMiddleware = require("../middlewares/authMiddleware");
-const { validate, validationRules } = require("../middlewares/validation");
+const db = require("../../db");
+const authMiddleware = require("../../middlewares/authMiddleware");
+const { validate, validationRules } = require("../../middlewares/validation");
 const { StatusCodes } = require("http-status-codes");
 const {
   getUserId,
   NotExistTags,
-} = require("../middlewares/favoriteMiddleware");
+} = require("../../middlewares/favoriteMiddleware");
 
 // 전체 태그 조회
 router.get("/all", authMiddleware, getUserId, (req, res) => {
@@ -24,7 +24,7 @@ router.get("/all", authMiddleware, getUserId, (req, res) => {
     LEFT JOIN tags_likes ON tags.id = tags_likes.tag_id AND tags_likes.user_id = ?;
   `;
 
-  conn.query(sql, [user_id], (err, results) => {
+  db.query(sql, [user_id], (err, results) => {
     if (err)
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -53,7 +53,7 @@ router.post(
 
     let checkExistingSql = `SELECT tag_id FROM tags_likes WHERE user_id = ? AND tag_id IN (?)`;
 
-    conn.query(checkExistingSql, [user_id, tagIds], (err, existingResults) => {
+    db.query(checkExistingSql, [user_id, tagIds], (err, existingResults) => {
       if (err)
         return res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -76,7 +76,7 @@ router.post(
       let insertSql = "INSERT INTO tags_likes (tag_id, user_id) VALUES ?";
       const insertValues = newTagIds.map((tag_id) => [tag_id, user_id]);
 
-      conn.query(insertSql, [insertValues], (err) => {
+      db.query(insertSql, [insertValues], (err) => {
         if (err)
           return res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -105,7 +105,7 @@ router.get("/", authMiddleware, getUserId, (req, res) => {
     WHERE tags_likes.user_id = ?;
   `;
 
-  conn.query(sql, [user_id], (err, results) => {
+  db.query(sql, [user_id], (err, results) => {
     if (err)
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -130,7 +130,7 @@ router.delete(
     const tagNameMap = new Map(tagResults.map((tag) => [tag.id, tag.tag_name]));
 
     let checkExistingSql = `SELECT tag_id FROM tags_likes WHERE user_id = ? AND tag_id IN (?)`;
-    conn.query(checkExistingSql, [user_id, tagIds], (err, existingResults) => {
+    db.query(checkExistingSql, [user_id, tagIds], (err, existingResults) => {
       if (err)
         return res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -150,7 +150,7 @@ router.delete(
 
       let deleteSql =
         "DELETE FROM tags_likes WHERE tag_id IN (?) AND user_id = ?";
-      conn.query(deleteSql, [removableTagIds, user_id], (err) => {
+      db.query(deleteSql, [removableTagIds, user_id], (err) => {
         if (err)
           return res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)

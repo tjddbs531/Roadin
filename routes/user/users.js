@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const conn = require("../config/mariadb");
+const db = require("../../db");
 const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
-const { validate, validationRules } = requ-ire("../middlewares/validation");
-const authMiddleware = require("../middlewares/authMiddleware");
+const { validate, validationRules } = require("../../middlewares/validation");
+const authMiddleware = require("../../middlewares/authMiddleware");
 
 // 비밀번호 해싱 함수
 const hashPassword = async (password) => {
@@ -39,7 +39,7 @@ router.post(
     const { user_email, user_name, user_pwd, user_phone } = req.body;
 
     let checkDuplicate = `SELECT user_email FROM users WHERE user_email = ?`;
-    conn.query(checkDuplicate, user_email, async (err, results) => {
+    db.query(checkDuplicate, user_email, async (err, results) => {
       if (err)
         return res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -56,7 +56,7 @@ router.post(
         let sql = `INSERT INTO users (user_email, user_name, user_pwd, user_phone) VALUES (?, ?, ?, ?)`;
         let values = [user_email, user_name, hashedPwd, user_phone];
 
-        conn.query(sql, values, (err) => {
+        db.query(sql, values, (err) => {
           if (err) {
             console.log(err);
             return res.status(StatusCodes.BAD_REQUEST).end();
@@ -101,7 +101,7 @@ router.post(
 
     // 토큰이 없으면 비밀번호 확인 후 로그인 처리
     let sql = "SELECT * FROM users WHERE user_email = ?";
-    conn.query(sql, user_email, (err, results) => {
+    db.query(sql, user_email, (err, results) => {
       if (err) {
         console.error(err);
         return res
@@ -150,7 +150,7 @@ router.get("/mypage", authMiddleware, (req, res) => {
 
   let sql =
     "SELECT user_email, user_name, user_phone FROM users WHERE user_email = ?";
-  conn.query(sql, user_email, function (err, results) {
+  db.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
       return res
@@ -199,7 +199,7 @@ router.put(
     values.push(user_email);
 
     let sql = `UPDATE users SET ${updates.join(", ")} WHERE user_email = ?`;
-    conn.query(sql, values, (err, result) => {
+    db.query(sql, values, (err, result) => {
       if (err) {
         console.error(err);
         return res
@@ -218,7 +218,7 @@ router.delete("/mypage", authMiddleware, (req, res) => {
   const user_email = req.user.email;
 
   let sql = "DELETE FROM users WHERE user_email = ?";
-  conn.query(sql, user_email, function (err, results) {
+  db.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);
       return res
@@ -248,7 +248,7 @@ router.post(
 
     let sql =
       "SELECT user_email FROM users WHERE user_name = ? AND user_phone = ?";
-    conn.query(sql, [user_name, user_phone], (err, results) => {
+    db.query(sql, [user_name, user_phone], (err, results) => {
       if (err) {
         console.error(err);
         return res
@@ -280,7 +280,7 @@ router.post(
     const { user_name, user_phone, new_pwd } = req.body;
 
     let sql = "SELECT * FROM users WHERE user_name = ? AND user_phone = ?";
-    conn.query(sql, [user_name, user_phone], async (err, results) => {
+    db.query(sql, [user_name, user_phone], async (err, results) => {
       if (err) {
         console.error(err);
         return res
@@ -297,7 +297,7 @@ router.post(
       try {
         const hashedPwd = await hashPassword(new_pwd);
         let updateSql = "UPDATE users SET user_pwd = ? WHERE user_phone = ?";
-        conn.query(updateSql, [hashedPwd, user_phone], (err) => {
+        db.query(updateSql, [hashedPwd, user_phone], (err) => {
           if (err) {
             console.error(err);
             return res

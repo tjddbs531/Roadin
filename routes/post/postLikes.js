@@ -1,7 +1,6 @@
-
 // routes/postLikes.js
 const express = require('express');
-const db = require('../models/db');
+const db = require('../../db');
 const router = express.Router();
 
 // 특정 소개글에 좋아요 추가

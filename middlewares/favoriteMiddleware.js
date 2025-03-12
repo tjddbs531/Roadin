@@ -1,10 +1,10 @@
-const conn = require("../config/mariadb");
+const db = require("../db");
 
 const getUserId = (req, res, next) => {
   const user_email = req.user.email;
 
   let findUserSql = "SELECT id FROM users WHERE user_email = ?";
-  conn.query(findUserSql, [user_email], (err, userResults) => {
+  db.query(findUserSql, [user_email], (err, userResults) => {
     if (err) return res.status(500).json({ message: "서버 오류", error: err });
 
     if (userResults.length === 0) {
@@ -20,7 +20,7 @@ const NotExistTags = (req, res, next) => {
   const { tag_names } = req.body;
 
   let findTagsSql = `SELECT id, tag_name FROM tags WHERE tag_name IN (?)`;
-  conn.query(findTagsSql, [tag_names], (err, tagResults) => {
+  db.query(findTagsSql, [tag_names], (err, tagResults) => {
     if (err) return res.status(500).json({ message: "서버 오류", error: err });
 
     if (tagResults.length === 0) {

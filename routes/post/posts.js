@@ -1,7 +1,7 @@
 
 // routes/posts.js
 const express = require('express');
-const db = require('../models/db');
+const db = require('../../db');
 const router = express.Router();
 
 // 모든 소개글 조회

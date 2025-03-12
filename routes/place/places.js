@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const db = require('../models/db');
+const db = require('../../db');
 const router = express.Router();
 
 // 특정 장소 조회 (도시명으로 위도/경도 찾기)

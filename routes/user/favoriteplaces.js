@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const conn = require("../config/mariadb");
-const authMiddleware = require("../middlewares/authMiddleware");
+const db = require("../../db");
+const authMiddleware = require("../../middlewares/authMiddleware");
 
 // 좋아요 누른 여행지 조회
 router.get("/", authMiddleware, (req, res) => {
   const userEmail = req.user.email;
 
-  conn.query(
+  db.query(
     "SELECT id FROM users WHERE user_email = ?",
     [userEmail],
     (err, results) => {
@@ -27,7 +27,7 @@ router.get("/", authMiddleware, (req, res) => {
         WHERE places_likes.user_id = ?;
       `;
 
-      conn.query(sql, [userId], (err, results) => {
+      db.query(sql, [userId], (err, results) => {
         if (err) {
           return res.status(500).json({ message: "서버 오류", error: err });
         }

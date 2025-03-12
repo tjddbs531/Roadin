@@ -1,7 +1,7 @@
 const express = require('express');
 const { validationResult, body } = require('express-validator');
 const axios = require('axios');
-const db = require('../db');
+const db = require('../../db');
 
 const router = express.Router();
 

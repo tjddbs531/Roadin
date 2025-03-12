@@ -87,7 +87,7 @@ router.get('/tag/:tag_name',
         }
         if(rows.length == 0){
             console.error('장소 없음');
-            res.status(404).send({ message: '장소 없음음' });
+            res.status(404).send({ message: '장소 없음' });
             return;
         }
         res.status(200).send({ message: '장소 목록', data: rows });
