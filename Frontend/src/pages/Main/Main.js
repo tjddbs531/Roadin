@@ -45,21 +45,21 @@ function Main() {
           </div>
         </section>
 
-        <section className='hashtags'>
+        <section className='popular_hashtags'>
           <h3>인기 해시태그</h3>
           <p>어떤 테마를 원하시나요?</p>
-          <div className='hashtags_container'>
-            <div className='hashtag'>#</div>
-            <div className='hashtag'>활동적인</div>
-            <div className='hashtag'>휴식</div>
-            <div className='hashtag'>부모님과 함께</div>
-            <div className='hashtag'>활동적인</div>
-            <div className='hashtag'>휴식</div>
-            <div className='hashtag'>부모님과 함께</div>
-            <div className='hashtag'>활동적인</div>
-            <div className='hashtag'>휴식</div>
-            <div className='hashtag'>부모님과 함께</div>
-            <div className='hashtag'>활동적인</div>
+          <div className='popular_hashtags_container'>
+            <div className='popular_hashtag'>#</div>
+            <div className='popular_hashtag'>활동적인</div>
+            <div className='popular_hashtag'>휴식</div>
+            <div className='popular_hashtag'>부모님과 함께</div>
+            <div className='popular_hashtag'>활동적인</div>
+            <div className='popular_hashtag'>휴식</div>
+            <div className='popular_hashtag'>부모님과 함께</div>
+            <div className='popular_hashtag'>활동적인</div>
+            <div className='popular_hashtag'>휴식</div>
+            <div className='popular_hashtag'>부모님과 함께</div>
+            <div className='popular_hashtag'>활동적인</div>
           </div>
         </section>
     </div>
