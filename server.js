@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
-console.log(process.env)
 const db = require('./db');
 
 const GEONAME_API_URL = process.env.GEONAME_API_URL;
