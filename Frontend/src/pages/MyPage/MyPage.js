@@ -13,25 +13,35 @@ function MyPage() {
   const [userData, setUserData] = useState([]);
   const [tags, setTags] = useState([]);
   const [viewAllTags, setViewAllTags] = useState(false);
-  const [activeTag, setActiveTag] = useState([]);
+  const [favoriteTags, setFavoriteTags] = useState([]) // 서버에서 가져온 초기 상태값
+  const [activeTag, setActiveTag] = useState([]); // UI 변경을 위한 값
 
-  // 회원 정보 조회 API 호출
+  // 테스트용 토큰
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODUxOTQ2LCJleHAiOjE3NDE4NTM3NDZ9.2ja-rocy240nwikPQtcLrW1mRrbOJ8RZ85fiENDwyyg';
+
+  // API 호출
   useEffect(() => {    
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxNzcwNDI1LCJleHAiOjE3NDE3NzIyMjV9.7Qqp3Q2B2_0M3uzILMCWNhH9JeWKrgVhZjOzk_OctOY';
-
+    // 회원 정보 조회 API
     const fetchUserData = axios.get(`http://localhost:3000/mypage`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    // 전체 태그 조회 API
     const fetchTags = axios.get(`http://localhost:3000/mypage/favoritetags/all`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    Promise.all([fetchUserData, fetchTags])
-      .then(([userDataResponse, tagsResponse]) => {
+    // 선호 태그 조회 API
+    const fetchFavoriteTags = axios.get(`http://localhost:3000/mypage/favoritetags`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    Promise.all([fetchUserData, fetchTags, fetchFavoriteTags])
+      .then(([userDataResponse, tagsResponse, favoriteTagsResponse]) => {
         setUserData(userDataResponse.data);
         setTags(tagsResponse.data.tags);
-        console.log(tags);
+        setFavoriteTags(favoriteTagsResponse.data.tags ? favoriteTagsResponse.data.tags : []);
+        setActiveTag(favoriteTagsResponse.data.tags ? favoriteTagsResponse.data.tags : []);
       })
       .catch((error) => {
         console.log('API 요청 오류 : ', error);
@@ -43,21 +53,46 @@ function MyPage() {
     setViewAllTags(!viewAllTags);
   }
 
-  // 태그 클릭 시 active 클래스를 토글하는 함수
-  const toggleTag = (tag) => {
-    setActiveTag((prevActiveTag) => {
-      if (prevActiveTag.includes(tag)) {
-        // 이미 활성화된 태그라면 비활성화
-        return prevActiveTag.filter((t) => t !== tag);
+  // 선호 태그 등록 및 취소
+  const toggleTag = async (tagName) => {
+    const isTagSelected = activeTag.includes(tagName);
+  
+    try {
+      if (isTagSelected) {
+        await removeTag(tagName);
+        setActiveTag((prev) => prev.filter((tag) => tag !== tagName));
       } else {
-        // 비활성화된 태그라면 활성화
-        return [...prevActiveTag, tag];
+        await addTag(tagName);
+        setActiveTag((prev) => [...prev, tagName]);
       }
-    });
-  }
+    } catch (error) {
+      console.error('태그 업데이트 오류:', error);
+    }
+  };
 
-  const removeTag = (tag) => {
-    setActiveTag((prevActiveTag) => prevActiveTag.filter((t) => t !== tag));
+  const addTag = async (tagName) => {
+    await axios.post(
+      `http://localhost:3000/mypage/favoritetags`,
+      { tag_names: [tagName] },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  };
+  
+  const removeTag = async (tagName) => {
+    const prevActiveTag = [...activeTag]; // 기존 상태 저장
+    const updatedTags = activeTag.filter((tag) => tag !== tagName);
+  
+    setActiveTag(updatedTags);
+  
+    try {
+      await axios.delete(`http://localhost:3000/mypage/favoritetags`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { tag_names: [tagName] },
+      });
+    } catch (error) {
+      console.error('태그 삭제 오류:', error);
+      setActiveTag(prevActiveTag); // 실패 시 원래 상태로 복구
+    }
   };
   
   return (
