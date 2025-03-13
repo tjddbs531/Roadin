@@ -22,7 +22,7 @@ const cityRouter = require('./routes/add/place');
 const tagRouter = require('./routes/add/tag');
 
 const placelikesRouter = require("./routes/place/placelikes");
-const placesRoutes = require('./routes/place/places');
+const placesWeatherRoutes = require('./routes/place/places_weather');
 const popularRouter = require('./routes/place/popular');
 const placeTagsRoutes = require('./routes/place/placeTags');
 
@@ -40,7 +40,7 @@ app.use('/place', cityRouter);
 app.use('/tag', tagRouter);
 
 app.use("/placelikes", placelikesRouter);
-app.use('/places', placesRoutes);
+app.use('/places_weather', placesWeatherRoutes);
 app.use('/popular', popularRouter);
 
 app.use("/mypage/favoriteplaces", favoriteplacesRouter);

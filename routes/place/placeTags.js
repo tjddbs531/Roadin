@@ -17,10 +17,13 @@ router.get('/', (req, res) => {
 // 특정 소개글에 태그 추가
 router.post('/', (req, res) => {
   const { place_id } = req.params;
-  const { tags_id } = req.body;
+  const { tag_id } = req.body;
+  
+  console.log(place_id)
 
-  db.query('INSERT INTO place_tags (place_id, tags_id) VALUES (?, ?)', [place_id, tags_id], (err, result) => {
+  db.query('INSERT INTO place_tags (place_id, tag_id) VALUES (?, ?)', [place_id, tag_id], (err, result) => {
     if (err) {
+      console.log(err);
       return res.status(500).send('서버 오류');
     }
     res.status(201).send('태그가 추가되었습니다.');

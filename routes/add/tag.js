@@ -27,7 +27,7 @@ router.post('/add',
           return res.status(500).send('서버 오류');
         }
         if (results.length > 0) {
-          return res.status(400).send('이미 태그입니다.');
+          return res.status(400).send('이미 있는 태그입니다.');
         }
     })
 
