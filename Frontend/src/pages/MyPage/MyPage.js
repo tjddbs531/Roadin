@@ -19,7 +19,7 @@ function MyPage() {
   const [favoritePlaces, setFavoritePlaces] = useState([]);
 
   // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU4NDA5LCJleHAiOjE3NDE4NjAyMDl9.hd9zYJgwo2umC2svIhnQ4--zB7twwWWo9w2tlETHE9o';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCA64KY64ukIiwiaWF0IjoxNzQxODYwMzI0LCJleHAiOjE3NDE4NjIxMjR9.YK62j1tb6w_WaYQ7mNiBETFozeqSvek9D83ToLkp34M';
 
   // API 호출
   useEffect(() => {    

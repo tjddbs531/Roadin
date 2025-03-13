@@ -29,7 +29,6 @@
   }
 
   .box::after {
-    content: "서울";
     position: absolute;
     left: 21px; /* 왼쪽 여백 */
     bottom: 15px; /* 하단 여백 */

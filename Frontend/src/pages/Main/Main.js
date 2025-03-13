@@ -12,6 +12,7 @@ function Main() {
   const navigate = useNavigate();
   
   const [isDomestic, setIsDomestic] = useState(true);
+  const [allPlaces, setAllPlaces] = useState([]);
   const [popularPlaces, setPopularPlaces] = useState([]);
   const [popularTags, setPopularTags] = useState([]);
 
@@ -23,14 +24,18 @@ function Main() {
 
   // API 호출
   useEffect(() => {    
+    // 전체 장소 조회 API
+    const fetchAllPlaces = axios.get(`http://localhost:3000/mainplace/korea`);
+
     // 인기 장소 조회 API
     const fetchPopularPlaces = axios.get(`http://localhost:3000/popular/place`);
 
     // 인기 태그 조회 API
     const fetchPopularTags = axios.get(`http://localhost:3000/popular/tag`);
 
-    Promise.all([fetchPopularPlaces, fetchPopularTags])
-      .then(([popularPlacesResponse, popularTagsResponse]) => {
+    Promise.all([fetchAllPlaces, fetchPopularPlaces, fetchPopularTags])
+      .then(([allPlacesResponse, popularPlacesResponse, popularTagsResponse]) => {
+        setAllPlaces(allPlacesResponse.data.data);
         setPopularPlaces(popularPlacesResponse.data.data);
         setPopularTags(popularTagsResponse.data.data);
       })
@@ -49,7 +54,7 @@ function Main() {
         <section className='areas'>
           <h3>{isDomestic ? '국내 여행지' : '해외 여행지'}</h3>
           <p>어디로 가시나요?</p>
-          <ImgSlide boxWidth={268} boxHeight={240} gap={20} totalBoxes={7}/>
+          <ImgSlide boxWidth={268} boxHeight={240} gap={20} placesData={allPlaces}/>
         </section>
 
         <section className='popular_area'>
@@ -82,8 +87,7 @@ function Main() {
           <h3>인기 해시태그</h3>
           <p>어떤 테마를 원하시나요?</p>
           <div className='popular_hashtags_container'>
-            <div className='popular_hashtag'>#</div>
-
+            <div className='popular_hashtag_default'>#</div>
             {popularTags.map((tag, index) => (
               <div className='popular_hashtag'>{tag.tag_name}</div>
             ))}
