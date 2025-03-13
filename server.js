@@ -25,7 +25,7 @@ const placelikesRouter = require("./routes/place/placelikes");
 const placesWeatherRoutes = require('./routes/place/places_weather');
 const popularRouter = require('./routes/place/popular');
 const placeTagsRoutes = require('./routes/place/placeTags');
-
+const koreaRouter = require('./routes/place/koreaplace');
 
 const favoriteplacesRouter = require("./routes/user/favoriteplaces");
 const favoritetagsRouter = require("./routes/user/favoritetags");
@@ -42,6 +42,7 @@ app.use('/tag', tagRouter);
 app.use("/placelikes", placelikesRouter);
 app.use('/places_weather', placesWeatherRoutes);
 app.use('/popular', popularRouter);
+app.use('/mainplace', koreaRouter);
 
 app.use("/mypage/favoriteplaces", favoriteplacesRouter);
 app.use("/mypage/favoritetags", favoritetagsRouter);
