@@ -6,7 +6,7 @@ const router = express.Router();
 // 특정 소개글의 태그 조회
 router.get('/', (req, res) => {
   const { place_id } = req.params;
-  db.query('SELECT t.tags_name FROM place_tags pt JOIN Tags t ON pt.tags_id = t.tags_id WHERE pt.place_id = ?', [place_id], (err, results) => {
+  db.query('SELECT t.tag_name FROM place_tags pt JOIN tags t ON pt.tags_id = t.id WHERE pt.place_id = ?', [place_id], (err, results) => {
     if (err) {
       return res.status(500).send('서버 오류');
     }
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // 특정 소개글에 태그 추가
-router.post('/', (req, res) => {
+router.post('/:place_id', (req, res) => {
   const { place_id } = req.params;
   const { tag_id } = req.body;
   
@@ -31,11 +31,10 @@ router.post('/', (req, res) => {
 });
 
 // 특정 소개글에서 태그 삭제
-router.delete('/:tag_id', (req, res) => {
-  const { place_id } = req.params;
-  const { tag_id } = req.params;
+router.delete('/:place_id/:tag_id', (req, res) => {
+  const { place_id, tag_id } = req.params;
 
-  db.query('DELETE FROM place_tags WHERE place_id = ? AND tags_id = ?', [place_id, tag_id], (err, result) => {
+  db.query('DELETE FROM place_tags WHERE place_id = ? AND tag_id = ?', [place_id, tag_id], (err, result) => {
     if (err) {
       return res.status(500).send('서버 오류');
     }

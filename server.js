@@ -49,7 +49,7 @@ app.use("/", userRouter);
 
 app.use('/comments', commentsRoutes);
 
-app.use('/place/:place_id/tags', placeTagsRoutes);
+app.use('/place_tags', placeTagsRoutes);
 
 
 app.listen(process.env.PORT);
