@@ -15,6 +15,7 @@ function MyPage() {
   const [viewAllTags, setViewAllTags] = useState(false);
   const [favoriteTags, setFavoriteTags] = useState([]) // 서버에서 가져온 초기 상태값
   const [activeTag, setActiveTag] = useState([]); // UI 변경을 위한 값
+  const [showModal, setShowModal] = useState(false); // 탈퇴 확인 모달
 
   // 테스트용 토큰
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU0MTg2LCJleHAiOjE3NDE4NTU5ODZ9.i4xW49ib1VMQLiZql0vcGvG_l-y5slunG7NYW-Us9_E';
@@ -94,6 +95,26 @@ function MyPage() {
       setActiveTag(prevActiveTag); // 실패 시 원래 상태로 복구
     }
   };
+
+  // 계정 탈퇴 API
+  const handleDeleteAccount = async () => {
+    try {
+      await axios.delete('http://localhost:3000/mypage', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      navigate('/');
+    } catch (error) {
+      console.log('계정 탈퇴 오류 : ', error);
+    }
+  }
+
+   const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   
   return (
     <div className='mypage_container'>
@@ -115,7 +136,23 @@ function MyPage() {
                 </div>
 
                 <div className='btn_container'>
-                  <button className='delete_btn'>계정탈퇴</button>
+                  <button className='delete_btn' onClick={openModal}>계정탈퇴</button>
+                  {showModal && (
+                    <div className="delete_modal">
+                      <div className="delete_modal_content">
+                        <p>정말로 계정을 탈퇴하시겠습니까?</p>
+                        <div className="delete_modal_buttons">
+                          <button onClick={closeModal} className="delete_cancel_btn">
+                            취소
+                          </button>
+                          <button onClick={handleDeleteAccount} className="delete_confirm_btn">
+                            확인
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <button className='edit_btn' onClick={() => navigate("/myPage/edit", { state: { userData } })}>수정하기</button>
                 </div>
             </div>
