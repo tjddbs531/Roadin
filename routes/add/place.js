@@ -24,10 +24,11 @@ router.post('/add',
     [
         body('place_name').notEmpty().isString().withMessage('도시 이름을 입력하세요.'),
         body('place_info').notEmpty().isString().withMessage('도시 설명을 입력하세요.'),
+        body('korea').notEmpty().isBoolean().withMessage('국내인지 해외인지 입력하세요.(true = 1, false = 0)'),
         validate
     ],
     (req, res) => {
-    const {place_name, place_info} = req.body;
+    const {place_name, place_info, korea} = req.body;
 
     // Geonames API를 사용하여 도시 검색
     axios.get(`http://api.geonames.org/searchJSON?`, {
@@ -61,8 +62,8 @@ router.post('/add',
         const place_lat = parseFloat(placeData.lat)
         const place_lon = parseFloat(placeData.lng)
 
-        const place_values = [place_geo_id, place_name, place_info,place_lat, place_lon]
-        const query = `INSERT INTO places (geo_id, place_name, place_info, place_lat,place_lon) VALUES (?,?,?,?,?)`;
+        const place_values = [place_geo_id, place_name, place_info, place_lat, place_lon, korea]
+        const query = `INSERT INTO places (geo_id, place_name, place_info, place_lat,place_lon, korea) VALUES (?,?,?,?,?,?)`;
         console.log(place_values)
         db.execute(query, place_values, (err, rows) => {
             if (err) {
@@ -75,7 +76,8 @@ router.post('/add',
                 message: '추가된 장소', 
                 geo_id : place_geo_id,
                 place_name : place_name,
-                place_info : place_info
+                place_info : place_info,
+                korea : korea
             });
         });
     })
