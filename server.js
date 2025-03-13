@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
-console.log(process.env)
 const db = require('./db');
 
 const GEONAME_API_URL = process.env.GEONAME_API_URL;
@@ -19,35 +18,38 @@ app.use(cors());
 
 const searchRouter = require('./routes/search');
 
-const cityRouter = require('./routes/place/place');
+const cityRouter = require('./routes/add/place');
+const tagRouter = require('./routes/add/tag');
+
 const placelikesRouter = require("./routes/place/placelikes");
-const placesRoutes = require('./routes/place/places');
-const popularRouter = require('./routes/place/popular_place');
+const placesWeatherRoutes = require('./routes/place/places_weather');
+const popularRouter = require('./routes/place/popular');
+const placeTagsRoutes = require('./routes/place/placeTags');
+
 
 const favoriteplacesRouter = require("./routes/user/favoriteplaces");
 const favoritetagsRouter = require("./routes/user/favoritetags");
 const userRouter = require("./routes/user/users");
 
-const commentsRoutes = require('./routes/post/comments');
-const postLikesRoutes = require('./routes/post/postLikes');
-const postsRoutes = require('./routes/post/posts');
-const postTagsRoutes = require('./routes/post/postTags');
+const commentsRoutes = require('./routes/comment/comments');
+
 
 app.use('/search', searchRouter);
 
 app.use('/place', cityRouter);
+app.use('/tag', tagRouter);
+
 app.use("/placelikes", placelikesRouter);
-app.use('/places', placesRoutes);
-app.use('/popular_place', popularRouter);
+app.use('/places_weather', placesWeatherRoutes);
+app.use('/popular', popularRouter);
 
 app.use("/mypage/favoriteplaces", favoriteplacesRouter);
 app.use("/mypage/favoritetags", favoritetagsRouter);
 app.use("/", userRouter);
 
 app.use('/comments', commentsRoutes);
-app.use('/posts/:post_id/like', postLikesRoutes);
-app.use('/posts', postsRoutes);
-app.use('/posts/:post_id/tags', postTagsRoutes);
+
+app.use('/place_tags', placeTagsRoutes);
 
 
 app.listen(process.env.PORT);

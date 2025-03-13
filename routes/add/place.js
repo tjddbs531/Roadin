@@ -15,7 +15,6 @@ const validate = (req, res, next) => {
     }
 };
 
-
 // GEONAME API 변수
 const username = process.env.GEONAME_USERNAME;
 const maxRows = 10;
@@ -47,11 +46,23 @@ router.post('/add',
             return;
         }
 
+
+        db.query('SELECT * FROM places WHERE geo_id = ?', [placeData.geonameId], (err, results) => {
+            if (err) {
+              return res.status(500).send('서버 오류');
+            }
+            if (results.length > 0) {
+              return res.status(400).send('이미 있는 도시입니다.');
+            }
+        })
+
         // 해당 도시의 장소 조회
         const place_geo_id = parseInt(placeData.geonameId)
-        // const place_latitude = parseFloat(place)
-        const place_values = [place_geo_id, place_name, place_info]
-        const query = `INSERT INTO places (geo_id, place_name, place_info) VALUES (?,?,?)`;
+        const place_lat = parseFloat(placeData.lat)
+        const place_lon = parseFloat(placeData.lng)
+
+        const place_values = [place_geo_id, place_name, place_info,place_lat, place_lon]
+        const query = `INSERT INTO places (geo_id, place_name, place_info, place_lat,place_lon) VALUES (?,?,?,?,?)`;
         console.log(place_values)
         db.execute(query, place_values, (err, rows) => {
             if (err) {
