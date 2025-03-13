@@ -23,7 +23,7 @@ router.get("/", authMiddleware, (req, res) => {
       const sql = `
         SELECT places.*
         FROM places_likes
-        JOIN places ON places_likes.place_id = places.id
+        JOIN places ON places_likes.place_id = places.geo_id
         WHERE places_likes.user_id = ?;
       `;
 
