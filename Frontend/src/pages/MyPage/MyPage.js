@@ -17,7 +17,7 @@ function MyPage() {
   const [activeTag, setActiveTag] = useState([]); // UI 변경을 위한 값
 
   // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODUxOTQ2LCJleHAiOjE3NDE4NTM3NDZ9.2ja-rocy240nwikPQtcLrW1mRrbOJ8RZ85fiENDwyyg';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU0MTg2LCJleHAiOjE3NDE4NTU5ODZ9.i4xW49ib1VMQLiZql0vcGvG_l-y5slunG7NYW-Us9_E';
 
   // API 호출
   useEffect(() => {    
@@ -116,7 +116,7 @@ function MyPage() {
 
                 <div className='btn_container'>
                   <button className='delete_btn'>계정탈퇴</button>
-                  <button className='edit_btn' onClick={() => navigate("/myPage/edit")}>수정하기</button>
+                  <button className='edit_btn' onClick={() => navigate("/myPage/edit", { state: { userData } })}>수정하기</button>
                 </div>
             </div>
 
