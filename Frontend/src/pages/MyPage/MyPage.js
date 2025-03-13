@@ -16,9 +16,10 @@ function MyPage() {
   const [favoriteTags, setFavoriteTags] = useState([]) // 서버에서 가져온 초기 상태값
   const [activeTag, setActiveTag] = useState([]); // UI 변경을 위한 값
   const [showModal, setShowModal] = useState(false); // 탈퇴 확인 모달
+  const [favoritePlaces, setFavoritePlaces] = useState([]);
 
   // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU0MTg2LCJleHAiOjE3NDE4NTU5ODZ9.i4xW49ib1VMQLiZql0vcGvG_l-y5slunG7NYW-Us9_E';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU4NDA5LCJleHAiOjE3NDE4NjAyMDl9.hd9zYJgwo2umC2svIhnQ4--zB7twwWWo9w2tlETHE9o';
 
   // API 호출
   useEffect(() => {    
@@ -37,12 +38,18 @@ function MyPage() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    Promise.all([fetchUserData, fetchTags, fetchFavoriteTags])
-      .then(([userDataResponse, tagsResponse, favoriteTagsResponse]) => {
+    // 좋아요 장소 조회 API
+    const fetchFavoritePlaces = axios.get(`http://localhost:3000/mypage/favoriteplaces`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    Promise.all([fetchUserData, fetchTags, fetchFavoriteTags, fetchFavoritePlaces])
+      .then(([userDataResponse, tagsResponse, favoriteTagsResponse, favoritePlacesResponse]) => {
         setUserData(userDataResponse.data);
         setTags(tagsResponse.data.tags);
         setFavoriteTags(favoriteTagsResponse.data.tags ? favoriteTagsResponse.data.tags : []);
         setActiveTag(favoriteTagsResponse.data.tags ? favoriteTagsResponse.data.tags : []);
+        setFavoritePlaces(favoritePlacesResponse.data);
       })
       .catch((error) => {
         console.log('API 요청 오류 : ', error);
@@ -196,12 +203,30 @@ function MyPage() {
             <div className='likes_container' style={{marginBottom: 80}}>
               <p className='like_title'>좋아요</p>
               <div className='like_places_container'>
-                <div className="places">
+                {favoritePlaces.map((place, index) => (
+                  <div key={index} className='myPlaces'>
+                    <img src={like_active} alt='like'/>
+                    <div
+                      className="myPlace_name"
+                      style={{
+                        position: 'absolute',
+                        left: '21px',
+                        bottom: '15px',
+                        fontFamily: 'PretendardBold',
+                        fontSize: '24px',
+                        color: 'white',
+                      }}
+                    >
+                      {place.place_name}
+                    </div>
+                  </div>
+                ))}
+                {/* <div className="places">
                   <img src={like_active} alt='like'/>
                 </div>
                 <div className="places">
                   <img src={like_active} alt='like'/>
-                </div>
+                </div> */}
               </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ function MyPageEdit() {
     const [userPhone, setUserPhone] = useState(userData.user_phone);
 
     // 테스트용 토큰
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU0MTg2LCJleHAiOjE3NDE4NTU5ODZ9.i4xW49ib1VMQLiZql0vcGvG_l-y5slunG7NYW-Us9_E';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCV66-86rK9IiwiaWF0IjoxNzQxODU4NDA5LCJleHAiOjE3NDE4NjAyMDl9.hd9zYJgwo2umC2svIhnQ4--zB7twwWWo9w2tlETHE9o';
 
     // 입력 값 변경 시 상태 업데이트
     const handleNameChange = (e) => setUserName(e.target.value);

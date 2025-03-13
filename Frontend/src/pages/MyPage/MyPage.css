@@ -230,7 +230,7 @@
     margin-bottom: 16px;
 }
 
-.places {
+.myPlaces {
     background-color: #484848;
     width: 240px;
     height: 240px;
@@ -241,8 +241,7 @@
     position: relative;
 }
 
-.places::after {
-    content: "서울";
+.myPlaces::after {
     position: absolute;
     left: 21px;
     bottom: 15px;
@@ -251,7 +250,7 @@
     color: white;
 }
 
-.places img {
+.myPlaces img {
     position: absolute;
     top: 12px;
     right: 12px;
