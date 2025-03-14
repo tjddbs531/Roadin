@@ -10,8 +10,6 @@ const db = mysql.createConnection({
     dateStrings: true,
 });
 
-console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD,)
-
 db.connect((err) => {
   if (err) {
     console.error('데이터베이스 연결 실패:', err);
