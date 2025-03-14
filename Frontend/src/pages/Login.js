@@ -80,7 +80,7 @@ function Login() {
         </button>
 
         {/* 아이디 찾기 | 비밀번호 찾기 | 회원가입 링크 */}
-        <div className="signup-links">
+        <div className="login-links">
           <Link to="/FindId" className="link-item">아이디 찾기</Link> |  
           <Link to="/FindPwd" className="link-item">비밀번호 찾기</Link> |  
           <Link to="/Signup" className="link-item">회원가입</Link>

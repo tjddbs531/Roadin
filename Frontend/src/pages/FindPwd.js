@@ -51,7 +51,7 @@ function FindPwd() {
 
         {foundPassword && <p className="findpwd-result">당신의 비밀번호: {foundPassword}</p>}
 
-        <div className="signup-links">
+        <div className="FindPwd-links">
           <Link to="/FindId" className="link-item">아이디 찾기</Link> |  
           <Link to="/FindPwd" className="link-item">비밀번호 찾기</Link> |  
           <Link to="/Signup" className="link-item">회원가입</Link>
