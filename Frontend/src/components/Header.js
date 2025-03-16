@@ -26,7 +26,7 @@ function Header() {
         <nav className="nav-menu">
           <a href="#">살펴보기</a>
           <a href="#">인기</a>
-          <a className="login_btn" href='/myPage'>로그인</a>
+          <a className="login_btn" href='/login'>로그인</a>
         </nav>
       </div>
     </header>

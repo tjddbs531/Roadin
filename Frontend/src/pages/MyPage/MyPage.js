@@ -19,7 +19,7 @@ function MyPage() {
   const [favoritePlaces, setFavoritePlaces] = useState([]);
 
   // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCA64KY64ukIiwiaWF0IjoxNzQxODYwMzI0LCJleHAiOjE3NDE4NjIxMjR9.YK62j1tb6w_WaYQ7mNiBETFozeqSvek9D83ToLkp34M';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi7IiY7KCVIiwiaWF0IjoxNzQyMTE5NDYzLCJleHAiOjE3NDIxMjEyNjN9.hoYUw5VbT2y3nS5y2UPXC9pL6nej3q1IMQAAFLRIY28';
 
   // API 호출
   useEffect(() => {    
@@ -41,7 +41,7 @@ function MyPage() {
     // 좋아요 장소 조회 API
     const fetchFavoritePlaces = axios.get(`http://localhost:3000/mypage/favoriteplaces`, {
       headers: { Authorization: `Bearer ${token}` },
-    })
+    });
 
     Promise.all([fetchUserData, fetchTags, fetchFavoriteTags, fetchFavoritePlaces])
       .then(([userDataResponse, tagsResponse, favoriteTagsResponse, favoritePlacesResponse]) => {
@@ -121,6 +121,20 @@ function MyPage() {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  // 여행지 좋아요 취소 API
+  const deleteLikesPlace = async (place_id) => {
+    try {
+      await axios.delete(`http://localhost:3000/placeLikes/${place_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: {user_id : 1} // 🚨 수정 필요 
+      });
+  
+      setFavoritePlaces((prevPlaces) => prevPlaces.filter((place) => place.geo_id !== place_id));
+    } catch (error) {
+      console.log('좋아요 삭제 오류:', error);
+    }
   };
   
   return (
@@ -205,7 +219,7 @@ function MyPage() {
               <div className='like_places_container'>
                 {favoritePlaces.map((place, index) => (
                   <div key={index} className='myPlaces'>
-                    <img src={like_active} alt='like'/>
+                    <img src={like_active} alt='like' style={{cursor: 'pointer'}} onClick={() => deleteLikesPlace(place.geo_id)}/>
                     <div
                       className="myPlace_name"
                       style={{
@@ -221,12 +235,6 @@ function MyPage() {
                     </div>
                   </div>
                 ))}
-                {/* <div className="places">
-                  <img src={like_active} alt='like'/>
-                </div>
-                <div className="places">
-                  <img src={like_active} alt='like'/>
-                </div> */}
               </div>
             </div>
         </div>
