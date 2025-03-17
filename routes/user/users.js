@@ -21,7 +21,7 @@ const generateToken = (user) => {
       name: user.user_name,
     },
     process.env.PRIVATE_KEY,
-    { expiresIn: "30m" } // 30분 만료
+    { expiresIn: "24h" } // 24시간 만료
   );
 };
 
@@ -149,7 +149,7 @@ router.get("/mypage", authMiddleware, (req, res) => {
   const user_email = req.user.email;
 
   let sql =
-    "SELECT user_email, user_name, user_phone FROM users WHERE user_email = ?";
+    "SELECT id, user_email, user_name, user_phone FROM users WHERE user_email = ?";
   db.query(sql, user_email, function (err, results) {
     if (err) {
       console.error(err);

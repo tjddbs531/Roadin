@@ -19,7 +19,7 @@ function MyPage() {
   const [favoritePlaces, setFavoritePlaces] = useState([]);
 
   // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi7IiY7KCVIiwiaWF0IjoxNzQyMTE5NDYzLCJleHAiOjE3NDIxMjEyNjN9.hoYUw5VbT2y3nS5y2UPXC9pL6nej3q1IMQAAFLRIY28';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi7IiY7KCVIiwiaWF0IjoxNzQyMjE2MjQzLCJleHAiOjE3NDIzMDI2NDN9.Xw0IbRtlhutSxOd7HTVHYy7O-xIHbAAGdsKdjuGIz0c';
 
   // API 호출
   useEffect(() => {    
@@ -128,7 +128,7 @@ function MyPage() {
     try {
       await axios.delete(`http://localhost:3000/placeLikes/${place_id}`, {
         headers: { Authorization: `Bearer ${token}` },
-        data: {user_id : 1} // 🚨 수정 필요 
+        data: {user_id : userData.id}
       });
   
       setFavoritePlaces((prevPlaces) => prevPlaces.filter((place) => place.geo_id !== place_id));
