@@ -14,7 +14,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+
+app.use(cors({
+    origin: "http://localhost:3001", // ✅ 프론트엔드 도메인을 명확하게 설정
+    credentials: true, // ✅ 쿠키 및 인증 정보 허용
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 const searchRouter = require('./routes/search');
 
@@ -54,3 +60,4 @@ app.use('/place_tags', placeTagsRoutes);
 
 
 app.listen(process.env.PORT);
+

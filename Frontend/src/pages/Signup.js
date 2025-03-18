@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import ErrorModal from "../components/ErrorModal";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";  // ✅ useNavigate 추가
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -14,6 +14,7 @@ function Signup() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();  // ✅ useNavigate 사용
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +30,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/join",  // ✅ 백엔드 URL 확인
+        "http://localhost:3000/join",
         {
           user_email: formData.user_email,
           user_name: formData.user_name,
@@ -44,8 +45,8 @@ function Signup() {
       alert(response.data.message || "회원가입 성공!");
       setFormData({ user_email: "", user_name: "", user_pwd: "", user_phone: "" });
 
-      // 🔹 회원가입 성공 후 localhost:3000으로 이동
-      window.location.href = "http://localhost:3001";
+      // ✅ 회원가입 성공 후 로그인 페이지로 이동
+      navigate("/login");
     } catch (error) {
       console.log(error);
       if (error.response) {
