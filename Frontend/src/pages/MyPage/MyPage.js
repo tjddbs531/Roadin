@@ -6,6 +6,7 @@ import profile from '../../assets/img/profile.svg';
 import x from '../../assets/img/x.svg';
 import plus from '../../assets/img/plus.svg';
 import like_active from '../../assets/img/ic_like_active.svg';
+import { getImageForPlace } from '../../utils/imageUtils';
 
 function MyPage() {
   const navigate = useNavigate();
@@ -214,9 +215,25 @@ function MyPage() {
             <div className='likes_container' style={{marginBottom: 80}}>
               <p className='like_title'>좋아요</p>
               <div className='like_places_container'>
-                {favoritePlaces.map((place, index) => (
-                  <div key={index} className='myPlaces'>
-                    <img src={like_active} alt='like' style={{cursor: 'pointer'}} onClick={() => deleteLikesPlace(place.geo_id)}/>
+                {favoritePlaces.map((place, index) => {
+                  const backgroundImage = getImageForPlace(place.place_name); // 임시 이미지
+
+                  return (
+                  <div 
+                    key={index} 
+                    className='myPlaces'
+                    onClick={() => navigate(`/place/${place.place_name}`)}
+                    style={{ backgroundImage: `url(${backgroundImage})`}}
+                  >
+                    <img 
+                      src={like_active} 
+                      alt='like'
+                      style={{cursor: 'pointer', zIndex: 10}} 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteLikesPlace(place.geo_id)
+                      }}
+                    />
                     <div
                       className="myPlace_name"
                       style={{
@@ -226,12 +243,13 @@ function MyPage() {
                         fontFamily: 'PretendardBold',
                         fontSize: '24px',
                         color: 'white',
+                        zIndex: 1
                       }}
                     >
                       {place.place_name}
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
             </div>
         </div>

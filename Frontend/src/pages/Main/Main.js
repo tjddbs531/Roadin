@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Main.css';
+import { getImageForPlace } from '../../utils/imageUtils';
 import toggle_abroad from '../../assets/img/toggle_abroad.svg';
 import toggle_domestic from '../../assets/img/toggle_domestic.svg';
 import ImgSlide from '../../components/ImgSlide/ImgSlide';
@@ -115,13 +116,24 @@ function Main() {
             <div className='img_container'>
               {popularPlaces.slice(0, 3).map((place) => {
                 const isLiked = likedPlaces.some(favoritePlace => favoritePlace.geo_id === place.geo_id);
+                
+                const backgroundImage = getImageForPlace(place.place_name); // 임시 이미지
+
                 return (
-                  <div key={place.geo_id} className='popular_box' onClick={() => navigate(`/place/${place.place_name}`)}>
+                  <div 
+                    key={place.geo_id} 
+                    className='popular_box' 
+                    onClick={() => navigate(`/place/${place.place_name}`)} 
+                    style={{ backgroundImage: `url(${backgroundImage})`}}
+                  >
                     <img 
                       src={isLogin ? (isLiked ? like_active : like_unactive) : like_unactive}
                       alt='like'
-                      onClick={() => handleLikeToggle(place.geo_id)}
-                      style={{cursor: 'pointer'}}
+                      onClick={(e) => {
+                        e.stopPropagation(); // img 클릭 시 이벤트 전파를 막음
+                        handleLikeToggle(place.geo_id);
+                      }} 
+                      style={{cursor: 'pointer', zIndex: 10}}
                     />
                     <div
                         className="place-name"
@@ -132,6 +144,7 @@ function Main() {
                           fontFamily: 'PretendardBold',
                           fontSize: '24px',
                           color: 'white',
+                          zIndex: 1
                         }}
                       >
                         {place.place_name}
@@ -158,3 +171,4 @@ function Main() {
 }
 
 export default Main;
+

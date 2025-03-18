@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getImageForPlace } from "../../utils/imageUtils";
 import "./ImgSlide.css";
 import nextRight from '../../assets/img/ic_next_right.svg';
 import nextLeft from '../../assets/img/ic_next_left.svg';
@@ -50,8 +51,11 @@ const ImgSlide = ({boxWidth, boxHeight, gap, placesData}) => {
           <img src={nextLeft}></img>
         </button>
         <div className="slider" style={{ transform: `translateX(${position}px)` }}>
-          {placesData.map((place, index) => (
-              <div className="box" key={index} style={{ width: boxWidth, height: boxHeight }} onClick={() => navigate(`/place/${place.place_name}`)}>
+          {placesData.map((place, index) => {
+              const backgroundImage = getImageForPlace(place.place_name); // 임시 이미지
+
+              return (
+                <div className="box" key={index} style={{ width: boxWidth, height: boxHeight, backgroundImage: `url(${backgroundImage})` }} onClick={() => navigate(`/place/${place.place_name}`)}>
                 <div
                       className="place-name"
                       style={{
@@ -61,12 +65,14 @@ const ImgSlide = ({boxWidth, boxHeight, gap, placesData}) => {
                         fontFamily: 'PretendardBold',
                         fontSize: '24px',
                         color: 'white',
+                        zIndex: 1
                       }}
                     >
                       {place.place_name}
                   </div>
               </div>
-            ))}
+              )
+            })}
         </div>
         <button className="right-button" onClick={slideRight} style={{display : isLast ? 'none' : 'block'}}>
           <img src={nextRight}></img>
