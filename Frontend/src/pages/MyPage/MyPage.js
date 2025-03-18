@@ -9,7 +9,7 @@ import like_active from '../../assets/img/ic_like_active.svg';
 
 function MyPage() {
   const navigate = useNavigate();
-
+  
   const [userData, setUserData] = useState([]);
   const [tags, setTags] = useState([]);
   const [viewAllTags, setViewAllTags] = useState(false);
@@ -18,29 +18,26 @@ function MyPage() {
   const [showModal, setShowModal] = useState(false); // 탈퇴 확인 모달
   const [favoritePlaces, setFavoritePlaces] = useState([]);
 
-  // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi7IiY7KCVIiwiaWF0IjoxNzQyMjE2MjQzLCJleHAiOjE3NDIzMDI2NDN9.Xw0IbRtlhutSxOd7HTVHYy7O-xIHbAAGdsKdjuGIz0c';
-
   // API 호출
   useEffect(() => {    
     // 회원 정보 조회 API
     const fetchUserData = axios.get(`http://localhost:3000/mypage`, {
-      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true
     });
 
     // 전체 태그 조회 API
     const fetchTags = axios.get(`http://localhost:3000/mypage/favoritetags/all`, {
-      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true
     });
 
     // 선호 태그 조회 API
     const fetchFavoriteTags = axios.get(`http://localhost:3000/mypage/favoritetags`, {
-      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true
     });
 
     // 좋아요 장소 조회 API
     const fetchFavoritePlaces = axios.get(`http://localhost:3000/mypage/favoriteplaces`, {
-      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true
     });
 
     Promise.all([fetchUserData, fetchTags, fetchFavoriteTags, fetchFavoritePlaces])
@@ -82,7 +79,7 @@ function MyPage() {
     await axios.post(
       `http://localhost:3000/mypage/favoritetags`,
       { tag_names: [tagName] },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { withCredentials: true }
     );
   };
   
@@ -94,7 +91,7 @@ function MyPage() {
   
     try {
       await axios.delete(`http://localhost:3000/mypage/favoritetags`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
         data: { tag_names: [tagName] },
       });
     } catch (error) {
@@ -107,7 +104,7 @@ function MyPage() {
   const handleDeleteAccount = async () => {
     try {
       await axios.delete('http://localhost:3000/mypage', {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
       navigate('/');
     } catch (error) {
@@ -127,7 +124,7 @@ function MyPage() {
   const deleteLikesPlace = async (place_id) => {
     try {
       await axios.delete(`http://localhost:3000/placeLikes/${place_id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
         data: {user_id : userData.id}
       });
   

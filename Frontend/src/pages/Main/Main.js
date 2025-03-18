@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 import './Main.css';
 import toggle_abroad from '../../assets/img/toggle_abroad.svg';
 import toggle_domestic from '../../assets/img/toggle_domestic.svg';
@@ -10,17 +11,14 @@ import like_unactive from '../../assets/img/ic_like_unactive.svg';
 
 function Main() {
   const navigate = useNavigate();
+  const { isLogin } = useAuth();
   
   const [isDomestic, setIsDomestic] = useState(true);
   const [allPlaces, setAllPlaces] = useState([]);
   const [popularPlaces, setPopularPlaces] = useState([]);
   const [popularTags, setPopularTags] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 여부 (임시)
   const [userData, setUserData] = useState([]);
   const [likedPlaces, setLikedPlaces] = useState([]);
-
-  // 테스트용 토큰
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi7IiY7KCVIiwiaWF0IjoxNzQyMjE2MjQzLCJleHAiOjE3NDIzMDI2NDN9.Xw0IbRtlhutSxOd7HTVHYy7O-xIHbAAGdsKdjuGIz0c';
 
   // 국내 해외 토글
   const toggleLocation = () => {
@@ -38,16 +36,16 @@ function Main() {
     const fetchPopularPlaces = axios.get(`http://localhost:3000/popular/place`);
 
     // 회원 정보 조회 API
-    const fetchUserData = isLoggedIn ?
+    const fetchUserData = isLogin ?
      axios.get(`http://localhost:3000/mypage`, {
-      headers: { Authorization: `Bearer ${token}` },
+       withCredentials: true
       })
       : Promise.resolve({ data: {} });
 
     // 로그인한 경우 좋아요 여부 확인
-    const fetchLikedPlaces = isLoggedIn ? 
+    const fetchLikedPlaces = isLogin ? 
       axios.get(`http://localhost:3000/mypage/favoriteplaces`, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       })
       : Promise.resolve({ data: [] });
 
@@ -65,11 +63,11 @@ function Main() {
       .catch((error) => {
         console.log('API 요청 오류 : ', error);
       });
-  }, [isLoggedIn]);
+  }, [isLogin]);
 
   // 좋아요 버튼
   const handleLikeToggle = async (geo_id) => {
-    if (!isLoggedIn) {
+    if (!isLogin) {
       navigate("/login"); // 로그인 안 되어 있으면 로그인 페이지로 이동
       return;
     }
@@ -81,7 +79,7 @@ function Main() {
       if (isLiked) {
         // 좋아요 취소
         await axios.delete(url, {
-          headers: { Authorization: `Bearer ${token}`},
+          withCredentials: true,
           data: {user_id : userData.id}
         });
 
@@ -89,7 +87,7 @@ function Main() {
       } else {
         // 좋아요 등록
         await axios.post(url, {user_id : userData.id}, {
-          headers: { Authorization: `Bearer ${token}` }
+          withCredentials: true
         });
         setLikedPlaces((prevPlaces) => [...prevPlaces, {geo_id}]);
       }
@@ -120,7 +118,7 @@ function Main() {
                 return (
                   <div key={place.geo_id} className='popular_box'>
                     <img 
-                      src={isLoggedIn ? (isLiked ? like_active : like_unactive) : like_unactive}
+                      src={isLogin ? (isLiked ? like_active : like_unactive) : like_unactive}
                       alt='like'
                       onClick={() => handleLikeToggle(place.geo_id)}
                       style={{cursor: 'pointer'}}

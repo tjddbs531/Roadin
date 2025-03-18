@@ -13,9 +13,6 @@ function MyPageEdit() {
     const [userName, setUserName] = useState(userData.user_name);
     const [userPhone, setUserPhone] = useState(userData.user_phone);
 
-    // 테스트용 토큰
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbmdAbWFpbC5jb20iLCJuYW1lIjoi6rCA64KY64ukIiwiaWF0IjoxNzQxODYwMzI0LCJleHAiOjE3NDE4NjIxMjR9.YK62j1tb6w_WaYQ7mNiBETFozeqSvek9D83ToLkp34M';
-
     // 입력 값 변경 시 상태 업데이트
     const handleNameChange = (e) => setUserName(e.target.value);
     const handlePhoneChange = (e) => setUserPhone(e.target.value);
@@ -29,7 +26,7 @@ function MyPageEdit() {
 
     try {
       await axios.put('http://localhost:3000/mypage/modify', updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true
       });
       navigate('/mypage'); // 수정 완료 후 이전 페이지로 이동
     } catch (error) {

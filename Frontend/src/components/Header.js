@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./Header.css";
 import logo from '../assets/img/logo.svg';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const { isLogin, user } = useAuth();
 
   const handleSearch = (e) => {
     if (e.key === "Enter" && search.trim() !== "") {
@@ -39,7 +41,10 @@ function Header() {
         <nav className="nav-menu">
           <a href="#">살펴보기</a>
           <a href="#">인기</a>
-          <a className="login_btn" href='/login'>로그인</a>
+          {isLogin ? 
+          <a className="login_btn" href='/myPage'>{user.user_name}님</a>
+          : <a className="login_btn" href='/login'>로그인</a> 
+          }
         </nav>
       </div>
     </header>
