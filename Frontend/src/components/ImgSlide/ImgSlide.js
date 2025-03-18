@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ImgSlide.css";
 import nextRight from '../../assets/img/ic_next_right.svg';
 import nextLeft from '../../assets/img/ic_next_left.svg';
 
 const ImgSlide = ({boxWidth, boxHeight, gap, placesData}) => {
   const totalBoxes = placesData.length;
+  const navigate = useNavigate();
 
   // 슬라이드 상태 관리
   const [position, setPosition] = useState(0);
@@ -49,7 +51,7 @@ const ImgSlide = ({boxWidth, boxHeight, gap, placesData}) => {
         </button>
         <div className="slider" style={{ transform: `translateX(${position}px)` }}>
           {placesData.map((place, index) => (
-              <div className="box" key={index} style={{ width: boxWidth, height: boxHeight }}>
+              <div className="box" key={index} style={{ width: boxWidth, height: boxHeight }} onClick={() => navigate(`/place/${place.place_name}`)}>
                 <div
                       className="place-name"
                       style={{

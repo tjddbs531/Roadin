@@ -116,7 +116,7 @@ function Main() {
               {popularPlaces.slice(0, 3).map((place) => {
                 const isLiked = likedPlaces.some(favoritePlace => favoritePlace.geo_id === place.geo_id);
                 return (
-                  <div key={place.geo_id} className='popular_box'>
+                  <div key={place.geo_id} className='popular_box' onClick={() => navigate(`/place/${place.place_name}`)}>
                     <img 
                       src={isLogin ? (isLiked ? like_active : like_unactive) : like_unactive}
                       alt='like'
@@ -149,7 +149,7 @@ function Main() {
           <div className='popular_hashtags_container'>
             <div className='popular_hashtag_default'>#</div>
             {popularTags.map((tag, index) => (
-              <div key={index} className='popular_hashtag'>{tag.tag_name}</div>
+              <div key={index} className='popular_hashtag' onClick={() => navigate(`/search?query=${tag.tag_name}`)}>{tag.tag_name}</div>
             ))} 
           </div>
         </section>
