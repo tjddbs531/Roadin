@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import logo from '../assets/img/logo.svg';
 import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && search.trim() !== "") {
+      navigate(`/search?query=${encodeURIComponent(search)}`);
+    }
+  };
   
   return (
     <header className="header">
@@ -19,7 +26,13 @@ function Header() {
 
         {/*검색창*/}
         <div className="search-bar">
-          <input type="text" placeholder="검색" />
+          <input 
+            type="text" 
+            placeholder="검색" 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleSearch}
+          />
         </div>
 
         {/*네비게이션 메뉴*/}

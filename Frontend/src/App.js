@@ -9,6 +9,7 @@ import FindPwd from "./pages/FindPwd"; //비밀먼호 찾기 페이지 추가
 import Introduce from "./pages/Introduce"; //소개글 페이지 추가
 import MyPage from "./pages/MyPage/MyPage";
 import MyPageEdit from "./pages/MyPage/MyPageEdit";
+import Search from "./pages/Search/Search";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/myPage" element={<MyPage />} />
           <Route path="/myPage/edit" element={<MyPageEdit />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Layout>  
     </Router>
