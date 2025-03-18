@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
       setIsLogin(false);
       setUser(null); // 로그아웃 시 상태 초기화
 

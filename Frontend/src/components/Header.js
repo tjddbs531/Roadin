@@ -6,13 +6,35 @@ import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
+  const { logout, isLogin, user } = useAuth();
+
   const [search, setSearch] = useState("");
-  const { isLogin, user } = useAuth();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleSearch = (e) => {
     if (e.key === "Enter" && search.trim() !== "") {
       navigate(`/search?query=${encodeURIComponent(search)}`);
     }
+  };
+
+  const logoutAction = async () => {
+    await logout();
+    hideDropdown();
+    navigate('/');
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown((prevState) => !prevState);
+  };
+
+  const hideDropdown = () => {
+    setShowDropdown(false);
+  };
+
+  const handleMyPageClick = (e) => {
+    e.stopPropagation();
+    hideDropdown();
+    navigate('/myPage');
   };
   
   return (
@@ -42,8 +64,16 @@ function Header() {
           <a href="#">살펴보기</a>
           <a href="#">인기</a>
           {isLogin ? 
-          <a className="login_btn" href='/myPage'>{user.user_name}님</a>
-          : <a className="login_btn" href='/login'>로그인</a> 
+            <>
+            <a className="login_btn" onClick={toggleDropdown} onBlur={hideDropdown}>{user.user_name}님</a>
+            {showDropdown && (
+              <div className="dropdown">
+                <a onClick={handleMyPageClick}>마이페이지</a>
+                <a onClick={logoutAction}>로그아웃</a>
+              </div>
+            )} 
+            </>
+           : <a className="login_btn" href='/login'>로그인</a> 
           }
         </nav>
       </div>
