@@ -38,6 +38,8 @@ router.delete("/:place_id", (req, res) => {
   const { user_id } = req.body;
   const { place_id } = req.params;
 
+  console.log(`좋아요 삭제 요청: user_id=${user_id}, place_id=${place_id}`);
+
   db.query(
     "DELETE FROM places_likes WHERE place_id = ? AND user_id = ?",
     [place_id, user_id],
@@ -49,5 +51,25 @@ router.delete("/:place_id", (req, res) => {
     }
   );
 });
+
+// 좋아요 조회 API 수정
+router.get("/check/:place_id/:user_id", (req, res) => {
+  const { place_id, user_id } = req.params;
+
+  db.query(
+    "SELECT * FROM places_likes WHERE place_id = ? AND user_id = ?",
+    [place_id, user_id],
+    (err, results) => {
+      if (err) {
+        return res.status(500).send("서버 오류");
+      }
+
+      const liked = results.length > 0;
+
+      res.status(200).json({ liked });  // true 또는 false 반환
+    }
+  );
+});
+
 
 module.exports = router;
