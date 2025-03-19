@@ -51,7 +51,7 @@ const Introduce = () => {
 
     try {
       if (!liked) {
-        await axios.post(`http://localhost:3000/placelikes/${place_id}`, { user_id });
+        await axios.post(`http://localhost:3000/placelikes/${place_id}`, { user_id }, {withCredentials : true});
       } else {
         await axios.delete(`http://localhost:3000/placelikes/${place_id}`, { data: { user_id } });
       }
