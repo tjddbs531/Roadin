@@ -7,9 +7,10 @@ const Introduce = () => {
   const { place_name } = useParams();
   const [place, setPlace] = useState(null);
   const [placeInfo, setPlaceInfo] = useState(null);
-  const [liked, setLiked] = useState(false);
+  const [likedPlaces, setLikedPlaces] = useState([]); // 좋아요한 목록 저장
   const [error, setError] = useState("");
-  const user_id = 1; // 임시 사용자 id
+
+  const user_id = 1; // 임시 유저 (실제로는 Context, localStorage에서 가져오기)
 
   useEffect(() => {
     const fetchPlaceData = async () => {
@@ -17,45 +18,48 @@ const Introduce = () => {
         const encodedPlaceName = encodeURIComponent(place_name);
         const weatherResponse = axios.get(`http://localhost:3000/places_weather/${encodedPlaceName}`);
         const infoResponse = axios.get(`http://localhost:3000/search/place/${encodedPlaceName}`);
-        const [weatherData, infoData] = await Promise.all([weatherResponse, infoResponse]);
+        const likedPlacesResponse = axios.get(`http://localhost:3000/mypage/favoriteplaces`, { withCredentials: true });
+
+        const [weatherData, infoData, likedData] = await Promise.all([
+          weatherResponse,
+          infoResponse,
+          likedPlacesResponse
+        ]);
 
         if (Array.isArray(infoData.data.data) && infoData.data.data.length > 0) {
           const fetchedPlaceInfo = infoData.data.data[0];
           setPlaceInfo(fetchedPlaceInfo);
-          await checkIfLiked(fetchedPlaceInfo.geo_id);
         } else {
           setPlaceInfo(null);
         }
 
         setPlace(weatherData.data);
+        setLikedPlaces(likedData.data); // 내가 좋아요한 목록 저장
       } catch (err) {
         console.error("데이터 가져오기 실패:", err);
         setError("도시 정보를 불러오는 중 오류가 발생했습니다.");
       }
     };
 
-    const checkIfLiked = async (place_id) => {
-      try {
-        const res = await axios.get(`http://localhost:3000/placelikes/check/${place_id}/${user_id}`);
-        setLiked(res.data.liked);
-      } catch (err) {
-        console.error("좋아요 상태 확인 중 오류 발생:", err);
-      }
-    };
-
     fetchPlaceData();
   }, [place_name]);
+
+  // 현재 여행지가 내가 좋아요한 리스트에 있는지 체크
+  const isLiked = likedPlaces.some(place => place.geo_id === placeInfo?.geo_id);
 
   const handleLikeToggle = async () => {
     const place_id = placeInfo.geo_id;
 
     try {
-      if (!liked) {
-        await axios.post(`http://localhost:3000/placelikes/${place_id}`, { user_id });
+      if (!isLiked) {
+        // 좋아요 등록
+        await axios.post(`http://localhost:3000/placelikes/${place_id}`, { user_id }, { withCredentials: true });
+        setLikedPlaces((prev) => [...prev, { geo_id: place_id }]);
       } else {
-        await axios.delete(`http://localhost:3000/placelikes/${place_id}`, { data: { user_id } });
+        // 좋아요 취소
+        await axios.delete(`http://localhost:3000/placelikes/${place_id}`, { data: { user_id }, withCredentials: true });
+        setLikedPlaces((prev) => prev.filter((place) => place.geo_id !== place_id));
       }
-      setLiked(!liked);
     } catch (err) {
       console.error("좋아요 처리 중 오류 발생:", err);
     }
@@ -70,8 +74,8 @@ const Introduce = () => {
         <div className="introduce-container">
           <h1>{placeInfo.place_name}</h1>
 
-          <button className={`like-button ${liked ? "liked" : ""}`} onClick={handleLikeToggle}>
-            {liked ? "❤️ 좋아요 취소" : "🤍 좋아요"}
+          <button className={`like-button ${isLiked ? "liked" : ""}`} onClick={handleLikeToggle}>
+            {isLiked ? "❤️ 좋아요 취소" : "🤍 좋아요"}
           </button>
 
           <div className="place-info">
