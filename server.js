@@ -18,9 +18,9 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: "http://localhost:3001",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // 쿠키, 인증 정보 포함 요청 허용
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
   })
 );
 
