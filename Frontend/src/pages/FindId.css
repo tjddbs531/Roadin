@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 80vh;
 }
 
 .findid-box {
@@ -23,23 +23,28 @@
 
 .findid-input {
   width: 90%;
-  height:8%;
   padding: 10px;
-  margin-top: 35px;
+  margin-top: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 
 .findid-button {
-  width: 22%;
+  width: 100%; /* 부모 요소 기준으로 전체 너비 */
+  max-width: 330px; /* 최대 너비 설정 (원하는 크기) */
   padding: 10px;
-  background-color: #5A81FA;
+  background-color: #5a81fa;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top:60px;
-  margin-left:-335px;
+  margin-top: 37px;
+  display: flex;
+  justify-content: center; /* 버튼 내부 텍스트 정렬 */
+  align-items: center;
+  text-align: center;
+  margin-left: 10px; /* 왼쪽 자동 정렬 */
+  margin-right: auto; /* 오른쪽 자동 정렬 */
 }
 
 .findid-button:hover {

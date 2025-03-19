@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import ErrorModal from "../components/ErrorModal";
 import "./FindId.css";
 import { Link } from "react-router-dom";
@@ -88,11 +88,18 @@ function FindId() {
 
         {foundId && <p className="findid-result">당신의 아이디: {foundId}</p>}
 
-
         <div className="FindId-links">
-          <Link to="/FindId" className="link-item">아이디 찾기</Link> |  
-          <Link to="/FindPwd" className="link-item">비밀번호 찾기</Link> |  
-          <Link to="/Signup" className="link-item">회원가입</Link>
+          <Link to="/FindId" className="link-item">
+            아이디 찾기
+          </Link>{" "}
+          |
+          <Link to="/FindPwd" className="link-item">
+            비밀번호 찾기
+          </Link>{" "}
+          |
+          <Link to="/Signup" className="link-item">
+            회원가입
+          </Link>
         </div>
 
         {error && <ErrorModal message={error} onClose={() => setError("")} />}

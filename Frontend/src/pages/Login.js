@@ -54,7 +54,7 @@ const Login = () => {
           </button>
         </form>
         <div className="login-links">
-          <a href="/find-id">아이디 찾기</a> | <a href="/find-password">비밀번호 찾기</a> | <a href="/signup">회원가입</a>
+        <a href="/FindId">아이디 찾기</a> | <a href="/FindPwd">비밀번호 찾기</a> | <a href="/Signup">회원가입</a>
         </div>
       </div>
     </div>

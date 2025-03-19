@@ -1,74 +1,76 @@
 .findpwd-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 
 .findpwd-box {
-    width: 350px;
-    height: 300px; /* ✅ 높이를 자동 조정 (내용에 맞게) */
-    padding: 20px;
-    text-align: center;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+  width: 350px;
+  height: 400px; /* ✅ 높이를 자동 조정 (내용에 맞게) */
+  padding: 20px;
+  text-align: center;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 40px;
 }
 
 .findpwd-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .findpwd-input {
-    width: 90%;
-    height: 20px; /* ✅ 입력 필드 높이 조정 */
-    padding: 10px;
-    margin: 5px 0; /* ✅ 위아래 간격을 5px로 줄임 */
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top:15px;
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .findpwd-button {
-    width: 22%;
-    height:38px;
-    padding: 12px; 
-    background-color: #5A81FA;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 95px; /* ✅ 버튼 위 간격 조정 */
-    margin-left:-335px;
-    font-size: 14px;
-    transition: background 0.2s ease;
+  width: 330px; /* 부모 요소의 100% 크기로 설정 */
+  max-width: 330px; /* 최대 크기 제한 */
+  height: 45px;
+  padding: 10px;
+  background-color: #5a81fa;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  transition: background 0.2s ease;
+  margin-top: 80px;
+  margin-left: 10px;
+  margin-right: auto; /* 중앙 정렬 */
 }
 
 .findpwd-button:hover {
-    background-color: #4c64f0;
+  background-color: #4c64f0;
 }
 
 .FindPwd-links {
-    margin-top: 85px;
-    font-size: 14px;
-    gap: 30px;
-  }
-  
-.FindPwd-links a {
-    color: #0077b6;
-    text-decoration: none;
-  }
-  
-.FindPwd-links a:hover {
-    text-decoration: underline;
-  }
-
-.findpwd-result {
-    margin-top: 15px;
-    font-weight: bold;
-    color: green;
+  margin-top: 85px;
+  font-size: 14px;
+  gap: 30px;
 }
 
+.FindPwd-links a {
+  color: #0077b6;
+  text-decoration: none;
+}
 
+.FindPwd-links a:hover {
+  text-decoration: underline;
+}
+
+.findpwd-result {
+  margin-top: 15px;
+  font-weight: bold;
+  color: green;
+}
