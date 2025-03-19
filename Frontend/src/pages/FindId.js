@@ -88,7 +88,7 @@ function FindId() {
 
         {foundId && <p className="findid-result">당신의 아이디: {foundId}</p>}
 
-        <div className="FindId-links">
+        <div className="signup-links">
           <Link to="/FindId" className="link-item">
             아이디 찾기
           </Link>{" "}

@@ -7,7 +7,7 @@
 
 .findid-box {
   width: 350px;
-  height: 300px;
+  height: 350px;
   padding: 20px;
   text-align: center;
   background: white;
@@ -52,9 +52,8 @@
 }
 
 .FindId-links {
-  margin-top: 110px;
+  margin-top: 40px;
   font-size: 14px;
-  gap: 30px;
 }
 
 .FindId-links a {

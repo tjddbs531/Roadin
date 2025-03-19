@@ -21,7 +21,7 @@ const Login = () => {
       alert(`${userData.user_name}님 환영합니다.`);
 
       // ✅ 로그인 성공 후 localhost:3001로 이동
-      navigate('/');
+      navigate("/");
     } else {
       setError("로그인 실패");
     }
@@ -54,7 +54,8 @@ const Login = () => {
           </button>
         </form>
         <div className="login-links">
-        <a href="/FindId">아이디 찾기</a> | <a href="/FindPwd">비밀번호 찾기</a> | <a href="/Signup">회원가입</a>
+          <a href="/FindId">아이디 찾기</a> |{" "}
+          <a href="/FindPwd">비밀번호 찾기</a> | <a href="/Signup">회원가입</a>
         </div>
       </div>
     </div>

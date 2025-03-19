@@ -7,7 +7,7 @@ function PlaceList({placesData}) {
   
   return (
     <div>
-    {placesData.map((place, index) => (
+    { placesData.map((place, index) => (
         <div className="list_container">
             <div className="place_img_box"></div>
             <div className="list_text_container">
@@ -16,12 +16,12 @@ function PlaceList({placesData}) {
                     <p className="list_intro">{place.place_info}</p>
                 </div>
                 
-                <div className='list_tags_container'>
+                {/* <div className='list_tags_container'>
                     <div className='list_tag_default'>#</div>
-                    {place.tag_name.map((tag, tagIndex) => (
+                    { place.tag_name.map((tag, tagIndex) => (
                         <div className="list_tags" key={tagIndex}>{tag}</div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </div>
     ))}

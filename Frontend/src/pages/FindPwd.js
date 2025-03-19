@@ -38,7 +38,9 @@ function FindPwd() {
             setError("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
             break;
           default:
-            setError(error.response.data?.message || "알 수 없는 오류가 발생했습니다.");
+            setError(
+              error.response.data?.message || "알 수 없는 오류가 발생했습니다."
+            );
         }
       } else if (error.request) {
         setError("서버 응답이 없습니다. 네트워크 상태를 확인해주세요.");
@@ -85,17 +87,28 @@ function FindPwd() {
           onChange={(e) => setNewPassword(e.target.value)}
         />
 
-        <button className="findpwd-button" onClick={handleFindPassword} disabled={loading}>
+        <button
+          className="findpwd-button"
+          onClick={handleFindPassword}
+          disabled={loading}
+        >
           {loading ? "변경 중..." : "비밀번호 변경"}
         </button>
 
         {message && <p className="findpwd-result">{message}</p>}
 
-
-        <div className="FindPwd-links">
-          <Link to="/FindId" className="link-item">아이디 찾기</Link> |  
-          <Link to="/FindPwd" className="link-item">비밀번호 찾기</Link> |  
-          <Link to="/Signup" className="link-item">회원가입</Link>
+        <div className="signup-links">
+          <Link to="/FindId" className="link-item">
+            아이디 찾기
+          </Link>{" "}
+          |
+          <Link to="/FindPwd" className="link-item">
+            비밀번호 찾기
+          </Link>{" "}
+          |
+          <Link to="/Signup" className="link-item">
+            회원가입
+          </Link>
         </div>
 
         {error && <ErrorModal message={error} onClose={() => setError("")} />}
