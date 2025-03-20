@@ -31,7 +31,13 @@ function Main() {
   // API 호출
   useEffect(() => {    
     // 전체 장소 조회 API
-    const fetchAllPlaces = axios.get(`http://localhost:3000/mainplace/korea`);
+    let fetchAllPlaces;
+    if(isDomestic){    
+      fetchAllPlaces = axios.get(`http://localhost:3000/mainplace/korea`);
+    } else{
+      fetchAllPlaces = axios.get(`http://localhost:3000/mainplace/foreign_country`);
+    }
+
 
     // 인기 장소 조회 API
     const fetchPopularPlaces = axios.get(`http://localhost:3000/popular/place`);
@@ -64,7 +70,7 @@ function Main() {
       .catch((error) => {
         console.log('API 요청 오류 : ', error);
       });
-  }, [isLogin]);
+  }, [isLogin, isDomestic]);
 
   // 좋아요 버튼
   const handleLikeToggle = async (geo_id) => {
