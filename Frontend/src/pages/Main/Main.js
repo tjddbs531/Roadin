@@ -62,6 +62,7 @@ function Main() {
     Promise.all([fetchAllPlaces, fetchPopularPlaces, fetchUserData, fetchLikedPlaces, fetchPopularTags])
       .then(([allPlacesResponse, popularPlacesResponse, userDataResponse, likedPlacesResponse, popularTagsResponse]) => {
         setAllPlaces(allPlacesResponse.data.data);
+        console.log("장소조회데이터" + allPlacesResponse.data);
         setPopularPlaces(popularPlacesResponse.data.data);
         setUserData(userDataResponse.data);
         setLikedPlaces(likedPlacesResponse.data);
