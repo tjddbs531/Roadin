@@ -1,49 +1,43 @@
-2️⃣ 태그 필터링 시스템
+# 🛫 Road In 로드인
+> 여행지 소개글을 모아두는 홈페이지
 
-태그별 여행지 검색 가능
+<br>
 
-다중 태그 선택 지원
+<img src="https://github.com/user-attachments/assets/14a66e0b-c944-42db-840a-20ee8938a720" width=200px alt="logo"/>
 
-3️⃣ 좋아요 기능
+> 여행지에 들어가보다, 발 디디다<br><br>
+여행지로 가는 길을 R과 연결시켜 도로로<br>
+장소를 표현하는 핀을 i 위 + 길 끝 = 목적지<br>
 
-여행지 좋아요 추가/삭제 가능
+<br>
 
-좋아요한 여행지만 모아보기 지원
+## 🅰️ Ateam
+| Frontend | Frontend | Backend | Backend | Backend |
+| :-----: | :-----: | :------: | :------: | :------: |
+| <img src="https://avatars.githubusercontent.com/u/109705781?v=4" width=100px alt="강민경"/> | <img src="https://avatars.githubusercontent.com/u/86221268?v=4" width=100px alt="김성윤"/> | <img src="https://avatars.githubusercontent.com/u/195740930?v=4" width=100px alt="황가연"/> | <img src="https://avatars.githubusercontent.com/u/108311766?v=4" width=100px alt="황정우"/> | <img src="https://avatars.githubusercontent.com/u/177294056?v=4" width=100px alt="황지은"/> |
+| [강민경](https://github.com/mingyeong0210)|[김성윤](https://github.com/tjddbs531)|[황가연](https://github.com/hwanga12)|[황정우](https://github.com/Tory99)|[황지은](https://github.com/HwangJieun03)|
 
-🚀 설치 및 실행 방법
+<br>
 
-✅ http://localhost:3000에서 실행 가능! 🎉
+## 프로젝트 소개
+**RoadIn**은 여행지 정보를 제공하고, 검색 및 좋아요 기능을 지원하는 웹사이트입니다. 실시간 날씨 정보, 태그 기반 필터링, 인기 여행지 추천 등의 기능을 제공합니다.
 
-🛠 API 개발 & 테스트 (Postman 활용)
+## 🛠 기술 스택
+- **Frontend:** React, TypeScript, CSS  
+- **Backend:** Node.js (Express), Axios  
+- **Database:** MariaDB, MySQL Workbench  
+- **API Testing:** Postman  
+- **Deployment:** AWS, Vercel  
+- **Version Control:** GitHub  
 
-여행지 정보 조회 (GET /search/place/:place_name)
+---
 
-좋아요 추가 (POST /placelikes/:place_id)
+## 🔹 주요 기능
+### 여행지 검색 및 상세 페이지
+- 여행지 검색 후 상세 정보 제공  
+- **외부 API (Geonames, 날씨 API) 연동**  
+- 실시간 날씨 정보 표시
 
-태그 기반 여행지 검색 (GET /places/tag/:tag_name)
+- API 명세서  
+  **[API 명세서 보기](https://docs.google.com/spreadsheets/d/14vcNJZXsGkkZ6UgzIywA7xleaS_mST00FVMeWjPx6Gs/edit?usp=sharing)**
 
-Geonames API를 활용한 날씨 정보 조회 (GET /places_weather/:place_name)
-
-📌 DB 설계 & Workbench 활용
-
-MariaDB + MySQL Workbench를 사용하여 데이터베이스 설계
-
-여행지(places), 태그(tags), 사용자(users), 좋아요(places_likes) 테이블 구축
-
-🎯 추가 개발 예정 (To-Do)
-
-🔹 여행지 리뷰 기능 추가
-
-🔹 추천 여행지 시스템 구축
-
-🔹 반응형 UI 개선
-
-🔹 다크 모드 지원
-
-📄 라이선스
-
-이 프로젝트는 MIT License를 따릅니다. 자세한 내용은 LICENSE 파일을 확인하세요.
-
-🌟 사용해 주셔서 감사합니다!
-
-⭐️ Star를 눌러 프로젝트를 응원해주세요! 🚀🔥
