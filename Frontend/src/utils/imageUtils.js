@@ -18,7 +18,7 @@ export const getImageForPlace = (placeName) => {
         return 'https://cdn.pixabay.com/photo/2020/05/24/11/58/to-5213935_1280.jpg';
       case '전라남도':
         return '';
-      case '제주특별자치도':
+      case '제주도':
         return 'https://cdn.pixabay.com/photo/2022/04/28/19/47/republic-of-korea-7161860_1280.jpg';
       default:
         return 'https://mblogthumb-phinf.pstatic.net/MjAxODAzMDNfMjQ0/MDAxNTIwMDQxOTUyNTE2.f2kZuCUOL8q5Kqzd5JmqKFmjudM4qAYfJ2I_Q6ekvA4g.otiUZ4LFf7kVDb8PLN-1XImiREBhg3dXOL7kJ5UpQ7Yg.PNG.osy2201/6_%2880%ED%8D%BC%EC%84%BC%ED%8A%B8_%ED%9A%8C%EC%83%89%29_%ED%9A%8C%EC%83%89_%EB%8B%A8%EC%83%89_%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4_180303.png?type=w800';
