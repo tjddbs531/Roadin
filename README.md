@@ -19,11 +19,12 @@
 
 <br>
 
-## 프로젝트 소개
-**RoadIn**은 여행지 정보를 제공하고, 검색 및 좋아요 기능을 지원하는 웹사이트입니다. 실시간 날씨 정보, 태그 기반 필터링, 인기 여행지 추천 등의 기능을 제공합니다.
+##프로젝트 소개
+**RoadIn**은 여행지 정보를 제공하고, 검색 및 좋아요 기능을 지원하는 웹사이트입니다. 
+**실시간 날씨 정보, 태그 기반 필터링, 인기 여행지 추천 등의 기능을 제공합니다.
 
-## 🛠 기술 스택
-- **Frontend:** React, TypeScript, CSS  
+##기술 스택
+- **Frontend:** React, CSS  
 - **Backend:** Node.js (Express), Axios  
 - **Database:** MariaDB, MySQL Workbench  
 - **API Testing:** Postman  
@@ -32,7 +33,7 @@
 
 ---
 
-## 🔹 주요 기능
+## 주요 기능
 ### 여행지 검색 및 상세 페이지
 - 여행지 검색 후 상세 정보 제공  
 - **외부 API (Geonames, 날씨 API) 연동**  
