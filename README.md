@@ -11,7 +11,7 @@
 
 <br>
 
-## 🅰️ Ateam
+## 🅰Member
 | Frontend | Frontend | Backend | Backend | Backend |
 | :-----: | :-----: | :------: | :------: | :------: |
 | <img src="https://avatars.githubusercontent.com/u/109705781?v=4" width=400px alt="강민경"/> | <img src="https://avatars.githubusercontent.com/u/86221268?v=4" width=400px alt="김성윤"/> | <img src="https://avatars.githubusercontent.com/u/195740930?v=4" width=400px alt="황가연"/> | <img src="https://avatars.githubusercontent.com/u/108311766?v=4" width=400px alt="황정우"/> | <img src="https://avatars.githubusercontent.com/u/177294056?v=4" width=400px alt="황지은"/> |
