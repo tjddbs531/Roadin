@@ -64,13 +64,16 @@ function Search() {
             
         </section>
 
-        <section className='search_content_container'>
-            <h1>태그</h1>
-            { hasTags ? 
-                <PlaceList placesData={Tags} /> // ✅ 검색 결과 목록 컴포넌트입니다. 여기에 데이터 변수를 넣어주시면 됩니다.
-                : <p className='no_results'>"<span style={{color : '#5A81FA', fontWeight: 'bold'}}>{query}</span>" 검색어와 일치하는 태그가 없습니다.</p>
-            }
-        </section>
+      <section className='search_content_container'>
+        <h1>태그</h1>
+        {hasTags && Tags.length > 0 ? (
+          <PlaceList placesData={Tags} /> 
+        ) : (
+          <p className='no_results'>
+            "<span style={{ color: '#5A81FA', fontWeight: 'bold' }}>{query}</span>" 검색어와 일치하는 태그가 없습니다.
+          </p>
+        )}
+      </section>
     </div>
   );
 }

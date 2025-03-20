@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import ErrorModal from "../components/ErrorModal";
 import "./Signup.css";
-import { Link, useNavigate } from "react-router-dom";  // ✅ useNavigate 추가
+import { Link, useNavigate } from "react-router-dom"; // ✅ useNavigate 추가
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ function Signup() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();  // ✅ useNavigate 사용
+  const navigate = useNavigate(); // ✅ useNavigate 사용
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +43,12 @@ function Signup() {
       );
 
       alert(response.data.message || "회원가입 성공!");
-      setFormData({ user_email: "", user_name: "", user_pwd: "", user_phone: "" });
+      setFormData({
+        user_email: "",
+        user_name: "",
+        user_pwd: "",
+        user_phone: "",
+      });
 
       // ✅ 회원가입 성공 후 로그인 페이지로 이동
       navigate("/login");
