@@ -8,7 +8,7 @@ function PlaceList({placesData}) {
   return (
     <div>
     { placesData.map((place, index) => (
-        <div className="list_container">
+        <div className="list_container" onClick={() => navigate(`/place/${place.place_name}`)}>
             <div className="place_img_box"></div>
             <div className="list_text_container">
                 <div className="list_content_container">
