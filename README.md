@@ -2,6 +2,7 @@
 > 여행지 소개글을 모아두는 홈페이지
 
 <br>
+![다중다중로고(4)](https://github.com/user-attachments/assets/03696a9a-dc9f-4768-9ae9-3dac3024bdd6)
 
 <img src="https://github.com/user-attachments/assets/14a66e0b-c944-42db-840a-20ee8938a720" width=200px alt="logo"/>
 
